@@ -35,7 +35,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-6 md:mt-0 text-slate-500 text-xs italic">© 2024 ResumeMindAI.</div>
+        <div className="mt-6 md:mt-0 text-slate-500 text-xs italic">© 2026 ResumeMindAI</div>
       </div>
     </footer>
   );
