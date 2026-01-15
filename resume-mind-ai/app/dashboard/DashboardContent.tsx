@@ -6,7 +6,7 @@ import { createClient } from '@/app/lib/supabase/client';
 import DashboardLayout from '@/app/components/dashboard/layout/DashboardLayout';
 import UploadCard from '@/app/components/dashboard/cards/UploadCard';
 import PipelineStatusCard from '@/app/components/dashboard/cards/PipelineStatusCard';
-import RecentAnalysesList, { Analysis } from '@/app/components/dashboard/lists/RecentAnalysesList';
+import RecentAnalysesList from '@/app/components/dashboard/lists/RecentAnalysesList';
 import KnowledgeGraphCard from '@/app/components/dashboard/cards/KnowledgeGraphCard';
 import InsightCard from '@/app/components/dashboard/cards/InsightCard';
 
@@ -14,70 +14,51 @@ interface DashboardContentProps {
   user: User;
 }
 
-// Mock data for development
-const mockAnalyses: Analysis[] = [
-  {
-    id: '1',
-    fileName: 'Senior_DevOps_2024.pdf',
-    status: 'completed',
-    nodesExtracted: 45,
-    timestamp: '2 hours ago',
-  },
-  {
-    id: '2',
-    fileName: 'Product_Manager_v2.docx',
-    status: 'completed',
-    nodesExtracted: 32,
-    timestamp: 'Yesterday',
-  },
-  {
-    id: '3',
-    fileName: 'Consulting_Profile_Draft.pdf',
-    status: 'processing',
-    nodesExtracted: 0,
-    timestamp: '',
-  },
-];
-
-const mockPipelineStats = {
-  tokensUsed: 42000,
-  tokensLimit: 50000,
-  resumesProcessed: 12,
-  graphNodes: 1200,
-};
-
-const insights = [
+// Empty state insights - shown when no data is available
+const emptyInsights = [
   {
     icon: 'warning',
     iconColor: 'bg-red-500/10',
     iconTextColor: 'text-red-400',
     title: 'Skill Gap',
-    description: 'Missing Kubernetes certification for Senior DevOps roles.',
-    progressValue: 30,
+    description: 'Upload a resume to identify skill gaps for your target roles.',
+    isEmpty: true,
+    emptyMessage: 'Upload a resume to identify skill gaps for your target roles.',
+    emptyActionLabel: 'Upload Resume',
+    emptyActionHref: '/dashboard',
   },
   {
     icon: 'trending_up',
     iconColor: 'bg-blue-500/10',
     iconTextColor: 'text-blue-400',
     title: 'Market Position',
-    description: 'Your profile is in the top 15% for Python developers.',
-    highlightValue: 'Top 15%',
+    description: 'See how your profile compares to others in your field.',
+    isEmpty: true,
+    emptyMessage: 'Analyze your resume to see your market positioning.',
+    emptyActionLabel: 'Get Started',
+    emptyActionHref: '/dashboard',
   },
   {
     icon: 'school',
     iconColor: 'bg-primary/10',
     iconTextColor: 'text-primary',
     title: 'Interview Prep',
-    description: 'Generate technical questions based on your extracted skills.',
-    actionLabel: 'Start Session',
+    description: 'Generate interview questions based on your skills.',
+    isEmpty: true,
+    emptyMessage: 'Build your knowledge graph first to generate interview prep.',
+    emptyActionLabel: 'Learn More',
+    emptyActionHref: '/dashboard/help',
   },
   {
     icon: 'lightbulb',
     iconColor: 'bg-emerald-500/10',
     iconTextColor: 'text-emerald-400',
     title: 'Optimization',
-    description: '3 suggestions to improve your "Project Management" section.',
-    actionLabel: 'Review Now',
+    description: 'Get AI suggestions to improve your resume.',
+    isEmpty: true,
+    emptyMessage: 'Upload a resume to receive optimization suggestions.',
+    emptyActionLabel: 'Upload Resume',
+    emptyActionHref: '/dashboard',
   },
 ];
 
@@ -102,8 +83,7 @@ export default function DashboardContent({ user }: DashboardContentProps) {
   };
 
   const handleExploreGraph = () => {
-    console.log('Explore graph');
-    // TODO: Navigate to graph explorer
+    router.push('/dashboard/graph');
   };
 
   return (
@@ -112,32 +92,30 @@ export default function DashboardContent({ user }: DashboardContentProps) {
         {/* Row 1: Upload + Pipeline Status */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <UploadCard onFileSelect={handleFileSelect} />
-          <PipelineStatusCard
-            status="active"
-            llmProvider="GPT-4o"
-            stats={mockPipelineStats}
-          />
+          {/* Empty state - no LLM provider configured */}
+          <PipelineStatusCard />
         </div>
 
         {/* Row 2: Recent Analyses + Knowledge Graph */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
+            {/* Empty state - no analyses */}
             <RecentAnalysesList
-              analyses={mockAnalyses}
+              analyses={[]}
               onViewAnalysis={handleViewAnalysis}
               onViewAll={() => router.push('/dashboard/resumes')}
             />
           </div>
+          {/* Empty state - no graph data */}
           <KnowledgeGraphCard
-            topNode="Python"
-            matchScore={98}
+            hasData={false}
             onExplore={handleExploreGraph}
           />
         </div>
 
-        {/* Row 3: Insight Cards */}
+        {/* Row 3: Insight Cards - All in empty state */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {insights.map((insight, index) => (
+          {emptyInsights.map((insight, index) => (
             <InsightCard
               key={index}
               icon={insight.icon}
@@ -145,10 +123,10 @@ export default function DashboardContent({ user }: DashboardContentProps) {
               iconTextColor={insight.iconTextColor}
               title={insight.title}
               description={insight.description}
-              progressValue={insight.progressValue}
-              highlightValue={insight.highlightValue}
-              actionLabel={insight.actionLabel}
-              onAction={insight.actionLabel ? () => console.log(`Action: ${insight.title}`) : undefined}
+              isEmpty={insight.isEmpty}
+              emptyMessage={insight.emptyMessage}
+              emptyActionLabel={insight.emptyActionLabel}
+              emptyActionHref={insight.emptyActionHref}
             />
           ))}
         </div>
