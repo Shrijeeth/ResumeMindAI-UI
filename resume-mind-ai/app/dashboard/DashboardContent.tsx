@@ -102,7 +102,7 @@ export default function DashboardContent({ user }: DashboardContentProps) {
   useEffect(() => {
     const loadProviders = async () => {
       try {
-        const data = await apiFetch<ProviderApi[]>('/settings/llm-providers/');
+        const data = await apiFetch<ProviderApi[]>('/settings/llm-providers');
         setProviders(data || []);
       } catch (err) {
         const e = err as ApiError;
