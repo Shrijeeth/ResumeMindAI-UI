@@ -89,7 +89,7 @@ export default function LLMProvidersPage() {
     try {
       const [supported, data] = await Promise.all([
         apiFetch<SupportedProvider[]>('/settings/llm-providers/supported'),
-        apiFetch<ProviderApi[]>('/settings/llm-providers'),
+        apiFetch<ProviderApi[]>('/settings/llm-providers/'),
       ]);
       const lookup = supported.reduce<Record<ProviderType, SupportedProvider>>((acc, sp) => {
         acc[sp.provider_type] = sp;
@@ -177,7 +177,7 @@ export default function LLMProvidersPage() {
         });
         setProviders((prev) => prev.map((p) => (p.id === editingProvider.id ? mapProvider(updated) : p)));
       } else {
-        const created = await apiFetch<ProviderApi>('/settings/llm-providers', {
+        const created = await apiFetch<ProviderApi>('/settings/llm-providers/', {
           method: 'POST',
           body: JSON.stringify({
             provider_type: data.providerType,
