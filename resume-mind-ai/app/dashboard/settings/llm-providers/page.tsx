@@ -7,6 +7,7 @@ import ConfigureProviderForm, {
   ProviderType,
 } from '@/app/components/dashboard/settings/ConfigureProviderForm';
 import { apiFetch, ApiError } from '@/app/lib/api';
+import { ProviderCardSkeleton } from '@/app/components/dashboard/skeletons';
 
 interface ProviderApi {
   id: string;
@@ -238,7 +239,11 @@ export default function LLMProvidersPage() {
       {error && <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/20 px-4 py-3 rounded-lg">{error}</div>}
 
       {loading ? (
-        <div className="text-slate-400 text-sm">Loading providers...</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {[1, 2, 3].map((i) => (
+            <ProviderCardSkeleton key={i} />
+          ))}
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
           {providers.map((provider) => (

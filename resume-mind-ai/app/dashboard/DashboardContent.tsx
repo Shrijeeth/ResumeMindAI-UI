@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/app/lib/supabase/client';
@@ -10,7 +10,13 @@ import PipelineStatusCard from '@/app/components/dashboard/cards/PipelineStatusC
 import RecentAnalysesList from '@/app/components/dashboard/lists/RecentAnalysesList';
 import KnowledgeGraphCard from '@/app/components/dashboard/cards/KnowledgeGraphCard';
 import InsightCard from '@/app/components/dashboard/cards/InsightCard';
-import { apiFetch, ApiError } from '@/app/lib/api';
+import { useApi } from '@/app/lib/useApi';
+import {
+  PipelineStatusSkeleton,
+  RecentAnalysesListSkeleton,
+  KnowledgeGraphSkeleton,
+  InsightCardSkeleton,
+} from '@/app/components/dashboard/skeletons';
 
 interface DashboardContentProps {
   user: User;
@@ -76,7 +82,12 @@ const emptyInsights = [
 
 export default function DashboardContent({ user }: DashboardContentProps) {
   const router = useRouter();
-  const [providers, setProviders] = useState<ProviderApi[]>([]);
+
+  // Use the useApi hook for data fetching with caching
+  const { data: providers, isLoading } = useApi<ProviderApi[]>(
+    '/settings/llm-providers/',
+    { revalidateOnFocus: true, dedupingInterval: 5000 }
+  );
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -99,27 +110,13 @@ export default function DashboardContent({ user }: DashboardContentProps) {
     router.push('/dashboard/graph');
   };
 
-  useEffect(() => {
-    const loadProviders = async () => {
-      try {
-        const data = await apiFetch<ProviderApi[]>('/settings/llm-providers/');
-        setProviders(data || []);
-      } catch (err) {
-        const e = err as ApiError;
-        console.error('Failed to load providers', e?.message);
-        setProviders([]);
-      }
-    };
-
-    loadProviders();
-  }, []);
-
   const primaryProvider = useMemo(() => {
-    if (!providers.length) return null;
-    const connected = providers.find((p) => p.status === 'connected');
+    const providerList = providers || [];
+    if (!providerList.length) return null;
+    const connected = providerList.find((p) => p.status === 'connected');
     if (connected) return connected;
-    const withStatus = providers.find((p) => p.status !== undefined);
-    return withStatus || providers[0];
+    const withStatus = providerList.find((p) => p.status !== undefined);
+    return withStatus || providerList[0];
   }, [providers]);
 
   const pipelineStatus = useMemo(() => {
@@ -141,46 +138,58 @@ export default function DashboardContent({ user }: DashboardContentProps) {
         {/* Row 1: Upload + Pipeline Status */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <UploadCard onFileSelect={handleFileSelect} />
-          <PipelineStatusCard
-            status={pipelineStatus}
-            llmProvider={pipelineProviderName}
-            stats={null}
-          />
+          {isLoading ? (
+            <PipelineStatusSkeleton />
+          ) : (
+            <PipelineStatusCard
+              status={pipelineStatus}
+              llmProvider={pipelineProviderName}
+              stats={null}
+            />
+          )}
         </div>
 
         {/* Row 2: Recent Analyses + Knowledge Graph */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            {/* Empty state - no analyses */}
-            <RecentAnalysesList
-              analyses={[]}
-              onViewAnalysis={handleViewAnalysis}
-              onViewAll={() => router.push('/dashboard/resumes')}
-            />
+            {isLoading ? (
+              <RecentAnalysesListSkeleton />
+            ) : (
+              <RecentAnalysesList
+                analyses={[]}
+                onViewAnalysis={handleViewAnalysis}
+                onViewAll={() => router.push('/dashboard/resumes')}
+              />
+            )}
           </div>
-          {/* Empty state - no graph data */}
-          <KnowledgeGraphCard
-            hasData={false}
-            onExplore={handleExploreGraph}
-          />
+          {isLoading ? (
+            <KnowledgeGraphSkeleton />
+          ) : (
+            <KnowledgeGraphCard
+              hasData={false}
+              onExplore={handleExploreGraph}
+            />
+          )}
         </div>
 
-        {/* Row 3: Insight Cards - All in empty state */}
+        {/* Row 3: Insight Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {emptyInsights.map((insight, index) => (
-            <InsightCard
-              key={index}
-              icon={insight.icon}
-              iconColor={insight.iconColor}
-              iconTextColor={insight.iconTextColor}
-              title={insight.title}
-              description={insight.description}
-              isEmpty={insight.isEmpty}
-              emptyMessage={insight.emptyMessage}
-              emptyActionLabel={insight.emptyActionLabel}
-              emptyActionHref={insight.emptyActionHref}
-            />
-          ))}
+          {isLoading
+            ? [1, 2, 3, 4].map((i) => <InsightCardSkeleton key={i} />)
+            : emptyInsights.map((insight, index) => (
+                <InsightCard
+                  key={index}
+                  icon={insight.icon}
+                  iconColor={insight.iconColor}
+                  iconTextColor={insight.iconTextColor}
+                  title={insight.title}
+                  description={insight.description}
+                  isEmpty={insight.isEmpty}
+                  emptyMessage={insight.emptyMessage}
+                  emptyActionLabel={insight.emptyActionLabel}
+                  emptyActionHref={insight.emptyActionHref}
+                />
+              ))}
         </div>
 
         {/* Footer */}
