@@ -37,15 +37,17 @@ export default function Sidebar({ user, onSignOut, variant = 'desktop', onNaviga
       className={`$${''}
         ${isMobile ? 'flex flex-col h-full w-full bg-slate-900 border-r border-slate-700/50' : 'hidden lg:flex lg:flex-col w-64 border-r border-slate-700/50 bg-slate-900/50 backdrop-blur-xl'}`}
     >
-      {/* Logo */}
-      <div className="flex items-center gap-3 px-6 h-16 border-b border-slate-700/50">
-        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0">
-          <span className="material-symbols-outlined text-white text-lg">hub</span>
+      {/* Logo (desktop only; mobile header is provided by drawer container) */}
+      {!isMobile && (
+        <div className="flex items-center gap-3 px-6 h-16 border-b border-slate-700/50">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0">
+            <span className="material-symbols-outlined text-white text-lg">hub</span>
+          </div>
+          <span className="font-semibold text-white tracking-tight">
+            ResumeMind<span className="text-primary">AI</span>
+          </span>
         </div>
-        <span className="font-semibold text-white tracking-tight">
-          ResumeMind<span className="text-primary">AI</span>
-        </span>
-      </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-4 px-3">
