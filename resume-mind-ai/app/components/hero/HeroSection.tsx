@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import DashboardMockup from './DashboardMockup';
+import Link from "next/link";
+import DashboardMockup from "./DashboardMockup";
 
 export default function HeroSection() {
   return (
@@ -19,13 +19,16 @@ export default function HeroSection() {
 
         {/* Main Heading */}
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 text-white">
-          Build Your Professional<br />
+          Build Your Professional
+          <br />
           <span className="text-gradient">Knowledge Graph</span>
         </h1>
 
         {/* Description */}
         <p className="max-w-3xl mx-auto text-xl text-slate-400 mb-12 leading-relaxed">
-          Stop looking at flat documents. Transform your career history into an interactive, AI-powered intelligence map that reveals hidden strengths and opportunities.
+          Stop looking at flat documents. Transform your career history into an
+          interactive, AI-powered intelligence map that reveals hidden strengths
+          and opportunities.
         </p>
 
         {/* CTA Buttons */}
@@ -54,7 +57,8 @@ export default function HeroSection() {
             className="w-full sm:w-auto px-10 py-4 glass-card text-white font-semibold rounded-2xl hover:bg-slate-800 transition-all border border-slate-700/50 flex items-center justify-center gap-2"
             href="#demo"
           >
-            <span className="material-symbols-outlined">play_circle</span> Watch Platform Tour
+            <span className="material-symbols-outlined">play_circle</span> Watch
+            Platform Tour
           </a>
         </div>
 

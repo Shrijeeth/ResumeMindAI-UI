@@ -1,5 +1,5 @@
-import { type NextRequest } from 'next/server';
-import { updateSession } from '@/app/lib/supabase/middleware';
+import { type NextRequest } from "next/server";
+import { updateSession } from "@/app/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
   return await updateSession(request);
@@ -14,6 +14,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - public folder files (images, etc.)
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

@@ -3,7 +3,7 @@ import {
   RecentAnalysesListSkeleton,
   KnowledgeGraphSkeleton,
   InsightCardSkeleton,
-} from '@/app/components/dashboard/skeletons';
+} from "@/app/components/dashboard/skeletons";
 
 export default function DashboardLoading() {
   return (
@@ -17,7 +17,10 @@ export default function DashboardLoading() {
         {/* Nav items */}
         <div className="flex-1 p-4 space-y-2">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-10 bg-slate-700/30 rounded-lg animate-pulse" />
+            <div
+              key={i}
+              className="h-10 bg-slate-700/30 rounded-lg animate-pulse"
+            />
           ))}
         </div>
       </div>

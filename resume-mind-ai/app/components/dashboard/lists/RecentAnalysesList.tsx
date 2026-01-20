@@ -1,4 +1,4 @@
-import AnalysisItem, { AnalysisStatus } from './AnalysisItem';
+import AnalysisItem, { AnalysisStatus } from "./AnalysisItem";
 
 export interface Analysis {
   id: string;
@@ -52,11 +52,14 @@ export default function RecentAnalysesList({
       ) : (
         <div className="p-8 text-center">
           <div className="w-16 h-16 bg-slate-800/50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="material-symbols-outlined text-3xl text-slate-500">description</span>
+            <span className="material-symbols-outlined text-3xl text-slate-500">
+              description
+            </span>
           </div>
           <h4 className="text-white font-medium mb-2">No Analyses Yet</h4>
           <p className="text-slate-400 text-sm mb-4 max-w-xs mx-auto">
-            Upload your first resume using the card above to start building your career knowledge graph.
+            Upload your first resume using the card above to start building your
+            career knowledge graph.
           </p>
           <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
             <span className="material-symbols-outlined text-sm">info</span>

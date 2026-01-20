@@ -1,7 +1,7 @@
-import SettingsComingSoon from '@/app/components/dashboard/settings/SettingsComingSoon';
+import SettingsComingSoon from "@/app/components/dashboard/settings/SettingsComingSoon";
 
 export const metadata = {
-  title: 'API Keys | ResumeMindAI',
+  title: "API Keys | ResumeMindAI",
 };
 
 export default function APIKeysPage() {

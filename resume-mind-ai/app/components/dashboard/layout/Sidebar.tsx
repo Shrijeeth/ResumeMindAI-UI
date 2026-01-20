@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { User } from '@supabase/supabase-js';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import SidebarNavItem from './SidebarNavItem';
+import { User } from "@supabase/supabase-js";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import SidebarNavItem from "./SidebarNavItem";
 
-type SidebarVariant = 'desktop' | 'mobile';
+type SidebarVariant = "desktop" | "mobile";
 
 interface SidebarProps {
   user: User;
@@ -14,34 +14,41 @@ interface SidebarProps {
   onNavigate?: () => void;
 }
 
-export default function Sidebar({ user, onSignOut, variant = 'desktop', onNavigate }: SidebarProps) {
+export default function Sidebar({
+  user,
+  onSignOut,
+  variant = "desktop",
+  onNavigate,
+}: SidebarProps) {
   const pathname = usePathname();
 
   const mainNavItems = [
-    { icon: 'dashboard', label: 'Dashboard', href: '/dashboard' },
-    { icon: 'description', label: 'My Resumes', href: '/dashboard/resumes' },
-    { icon: 'hub', label: 'Knowledge Graph', href: '/dashboard/graph' },
-    { icon: 'work', label: 'Job Matches', href: '/dashboard/jobs' },
-    { icon: 'analytics', label: 'Analytics', href: '/dashboard/analytics' },
+    { icon: "dashboard", label: "Dashboard", href: "/dashboard" },
+    { icon: "description", label: "My Resumes", href: "/dashboard/resumes" },
+    { icon: "hub", label: "Knowledge Graph", href: "/dashboard/graph" },
+    { icon: "work", label: "Job Matches", href: "/dashboard/jobs" },
+    { icon: "analytics", label: "Analytics", href: "/dashboard/analytics" },
   ];
 
   const settingsNavItems = [
-    { icon: 'settings', label: 'Settings', href: '/dashboard/settings' },
-    { icon: 'help', label: 'Help & Support', href: '/dashboard/help' },
+    { icon: "settings", label: "Settings", href: "/dashboard/settings" },
+    { icon: "help", label: "Help & Support", href: "/dashboard/help" },
   ];
 
-  const isMobile = variant === 'mobile';
+  const isMobile = variant === "mobile";
 
   return (
     <aside
-      className={`$${''}
-        ${isMobile ? 'flex flex-col h-full w-full bg-slate-900 border-r border-slate-700/50' : 'hidden lg:flex lg:flex-col w-64 border-r border-slate-700/50 bg-slate-900/50 backdrop-blur-xl'}`}
+      className={`$${""}
+        ${isMobile ? "flex flex-col h-full w-full bg-slate-900 border-r border-slate-700/50" : "hidden lg:flex lg:flex-col w-64 border-r border-slate-700/50 bg-slate-900/50 backdrop-blur-xl"}`}
     >
       {/* Logo (desktop only; mobile header is provided by drawer container) */}
       {!isMobile && (
         <div className="flex items-center gap-3 px-6 h-16 border-b border-slate-700/50">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-white text-lg">hub</span>
+            <span className="material-symbols-outlined text-white text-lg">
+              hub
+            </span>
           </div>
           <span className="font-semibold text-white tracking-tight">
             ResumeMind<span className="text-primary">AI</span>
@@ -96,12 +103,14 @@ export default function Sidebar({ user, onSignOut, variant = 'desktop', onNaviga
             />
           ) : (
             <div className="w-9 h-9 bg-primary/20 rounded-full flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary text-lg">person</span>
+              <span className="material-symbols-outlined text-primary text-lg">
+                person
+              </span>
             </div>
           )}
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-white truncate">
-              {user.user_metadata?.full_name ?? 'User'}
+              {user.user_metadata?.full_name ?? "User"}
             </p>
             <p className="text-xs text-slate-400 truncate">{user.email}</p>
           </div>

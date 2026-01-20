@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -8,25 +8,42 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-              <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+              <span
+                className="material-symbols-outlined text-white text-2xl"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
                 hub
               </span>
             </div>
-            <span className="font-bold text-xl tracking-tight text-white">ResumeMindAI</span>
+            <span className="font-bold text-xl tracking-tight text-white">
+              ResumeMindAI
+            </span>
           </div>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link className="text-sm font-medium text-slate-400 hover:text-white transition-colors" href="/#features">
+            <Link
+              className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+              href="/#features"
+            >
               Features
             </Link>
-            <Link className="text-sm font-medium text-slate-400 hover:text-white transition-colors" href="/#how-it-works">
+            <Link
+              className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+              href="/#how-it-works"
+            >
               How it Works
             </Link>
-            <Link className="text-sm font-medium text-slate-400 hover:text-white transition-colors" href="/#insights">
+            <Link
+              className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+              href="/#insights"
+            >
               Insights
             </Link>
-            <Link className="text-sm font-medium text-slate-400 hover:text-white transition-colors" href="/contact">
+            <Link
+              className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+              href="/contact"
+            >
               Contact
             </Link>
             <Link

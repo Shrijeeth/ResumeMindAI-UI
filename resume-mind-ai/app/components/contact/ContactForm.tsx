@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState } from "react";
 
-const WEB3FORMS_URL = process.env.NEXT_PUBLIC_WEB3FORMS_URL ?? 'https://api.web3forms.com/submit';
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '';
+const WEB3FORMS_URL =
+  process.env.NEXT_PUBLIC_WEB3FORMS_URL ?? "https://api.web3forms.com/submit";
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -21,23 +22,23 @@ export default function ContactForm() {
 
     setIsSubmitting(true);
     if (!WEB3FORMS_KEY) {
-      setResult('Missing form configuration. Please try again later.');
+      setResult("Missing form configuration. Please try again later.");
       setIsSubmitting(false);
       return;
     }
 
-    setResult('Sending...');
+    setResult("Sending...");
 
     const formData = new FormData(e.currentTarget);
-    formData.append('access_key', WEB3FORMS_KEY);
+    formData.append("access_key", WEB3FORMS_KEY);
 
     try {
       const response = await fetch(WEB3FORMS_URL, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Accept: 'application/json'
+          Accept: "application/json",
         },
-        body: formData
+        body: formData,
       });
 
       const data = await response.json().catch(() => null);
@@ -45,29 +46,33 @@ export default function ContactForm() {
       const wasSuccess = data?.success ?? response.ok;
 
       if (!response.ok) {
-        setResult(data?.message ?? `Error sending message (status ${response.status})`);
+        setResult(
+          data?.message ?? `Error sending message (status ${response.status})`,
+        );
         return;
       }
 
       if (wasSuccess) {
-        setResult(data?.message ?? 'Form submitted successfully');
+        setResult(data?.message ?? "Form submitted successfully");
         e.currentTarget.reset();
       } else {
-        setResult(data?.message ?? 'Error sending message');
+        setResult(data?.message ?? "Error sending message");
       }
     } catch (error) {
-      console.error('Web3Forms submission error', error);
-      setResult('Network error, please try again');
+      console.error("Web3Forms submission error", error);
+      setResult("Network error, please try again");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -76,7 +81,10 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-semibold text-slate-300 ml-1">
+            <label
+              htmlFor="name"
+              className="text-sm font-semibold text-slate-300 ml-1"
+            >
               Name
             </label>
             <input
@@ -92,7 +100,10 @@ export default function ContactForm() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-semibold text-slate-300 ml-1">
+            <label
+              htmlFor="email"
+              className="text-sm font-semibold text-slate-300 ml-1"
+            >
               Work Email
             </label>
             <input
@@ -109,7 +120,10 @@ export default function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="subject" className="text-sm font-semibold text-slate-300 ml-1">
+          <label
+            htmlFor="subject"
+            className="text-sm font-semibold text-slate-300 ml-1"
+          >
             Subject
           </label>
           <input
@@ -125,7 +139,10 @@ export default function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="message" className="text-sm font-semibold text-slate-300 ml-1">
+          <label
+            htmlFor="message"
+            className="text-sm font-semibold text-slate-300 ml-1"
+          >
             Message
           </label>
           <textarea
@@ -144,7 +161,10 @@ export default function ContactForm() {
           type="submit"
           className="group relative w-full overflow-hidden rounded-2xl bg-slate-900/60 text-white font-semibold py-5 shadow-lg shadow-primary/20 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 hover:bg-slate-900 hover:shadow-xl hover:shadow-primary/30 active:translate-y-px border border-slate-600/80"
         >
-          <span className="absolute inset-0 rounded-2xl border border-white/10 opacity-0 transition-opacity duration-200 group-hover:opacity-100" aria-hidden />
+          <span
+            className="absolute inset-0 rounded-2xl border border-white/10 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            aria-hidden
+          />
           <span className="relative flex items-center justify-center gap-2 text-lg">
             <span className="material-symbols-outlined text-xl transition-transform duration-200 group-hover:translate-x-1">
               send
@@ -154,7 +174,11 @@ export default function ContactForm() {
         </button>
 
         {result && (
-          <p className="text-center text-sm text-slate-300" role="status" aria-live="polite">
+          <p
+            className="text-center text-sm text-slate-300"
+            role="status"
+            aria-live="polite"
+          >
             {result}
           </p>
         )}

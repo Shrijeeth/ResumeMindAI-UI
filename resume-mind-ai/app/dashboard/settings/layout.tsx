@@ -1,12 +1,16 @@
-'use client';
+"use client";
 
-import { User } from '@supabase/supabase-js';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { createClient } from '@/app/lib/supabase/client';
-import SettingsLayout from '@/app/components/dashboard/settings/SettingsLayout';
+import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createClient } from "@/app/lib/supabase/client";
+import SettingsLayout from "@/app/components/dashboard/settings/SettingsLayout";
 
-export default function SettingsRootLayout({ children }: { children: React.ReactNode }) {
+export default function SettingsRootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
@@ -18,7 +22,7 @@ export default function SettingsRootLayout({ children }: { children: React.React
       } = await supabase.auth.getUser();
 
       if (!user) {
-        router.push('/auth/login');
+        router.push("/auth/login");
         return;
       }
 
@@ -30,7 +34,7 @@ export default function SettingsRootLayout({ children }: { children: React.React
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push('/auth/login');
+    router.push("/auth/login");
     router.refresh();
   };
 

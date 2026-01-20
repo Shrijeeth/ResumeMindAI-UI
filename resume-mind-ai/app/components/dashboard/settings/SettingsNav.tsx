@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { usePathname } from 'next/navigation';
-import SettingsNavItem from './SettingsNavItem';
+import { usePathname } from "next/navigation";
+import SettingsNavItem from "./SettingsNavItem";
 
 interface SettingsNavItemData {
   icon: string;
@@ -17,26 +17,40 @@ interface SettingsNavSection {
 
 const settingsNavSections: SettingsNavSection[] = [
   {
-    title: 'AI Configuration',
-    items: [
-      { icon: 'smart_toy', label: 'LLM Providers', href: '/dashboard/settings/llm-providers' },
-    ],
-  },
-  {
-    title: 'Developer',
-    items: [
-      { icon: 'key', label: 'API Keys', href: '/dashboard/settings/api-keys', badge: 'Soon' },
-      { icon: 'webhook', label: 'Webhooks', href: '/dashboard/settings/webhooks', badge: 'Soon' },
-    ],
-  },
-  {
-    title: 'App',
+    title: "AI Configuration",
     items: [
       {
-        icon: 'notifications',
-        label: 'Notifications',
-        href: '/dashboard/settings/notifications',
-        badge: 'Soon',
+        icon: "smart_toy",
+        label: "LLM Providers",
+        href: "/dashboard/settings/llm-providers",
+      },
+    ],
+  },
+  {
+    title: "Developer",
+    items: [
+      {
+        icon: "key",
+        label: "API Keys",
+        href: "/dashboard/settings/api-keys",
+        badge: "Soon",
+      },
+      {
+        icon: "webhook",
+        label: "Webhooks",
+        href: "/dashboard/settings/webhooks",
+        badge: "Soon",
+      },
+    ],
+  },
+  {
+    title: "App",
+    items: [
+      {
+        icon: "notifications",
+        label: "Notifications",
+        href: "/dashboard/settings/notifications",
+        badge: "Soon",
       },
     ],
   },

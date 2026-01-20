@@ -1,10 +1,11 @@
-import type { Metadata } from 'next';
-import KnowledgeGraphBackground from '@/app/components/auth/KnowledgeGraphBackground';
-import GoogleSignInButton from '@/app/components/auth/GoogleSignInButton';
+import type { Metadata } from "next";
+import KnowledgeGraphBackground from "@/app/components/auth/KnowledgeGraphBackground";
+import GoogleSignInButton from "@/app/components/auth/GoogleSignInButton";
 
 export const metadata: Metadata = {
-  title: 'Login - ResumeMindAI',
-  description: 'Sign in to your ResumeMindAI account to access AI-powered career intelligence and profile mapping.',
+  title: "Login - ResumeMindAI",
+  description:
+    "Sign in to your ResumeMindAI account to access AI-powered career intelligence and profile mapping.",
 };
 
 export default function LoginPage() {
@@ -18,7 +19,9 @@ export default function LoginPage() {
         {/* Logo and Branding */}
         <div className="flex flex-col items-center mb-10">
           <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/20 mb-6 border border-white/10">
-            <span className="material-symbols-outlined text-4xl text-white">hub</span>
+            <span className="material-symbols-outlined text-4xl text-white">
+              hub
+            </span>
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white mb-2">
             ResumeMindAI
@@ -34,7 +37,9 @@ export default function LoginPage() {
             {/* Welcome Text */}
             <div className="text-center">
               <h2 className="text-xl font-medium text-white">Welcome Back</h2>
-              <p className="text-sm text-slate-400 mt-2">Sign in to continue to your dashboard</p>
+              <p className="text-sm text-slate-400 mt-2">
+                Sign in to continue to your dashboard
+              </p>
             </div>
 
             {/* Google Sign In Button */}
@@ -42,7 +47,10 @@ export default function LoginPage() {
 
             {/* Divider */}
             <div className="relative py-2">
-              <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div
+                className="absolute inset-0 flex items-center"
+                aria-hidden="true"
+              >
                 <div className="w-full border-t border-slate-700/50" />
               </div>
               <div className="relative flex justify-center">
@@ -54,12 +62,18 @@ export default function LoginPage() {
 
             {/* Legal Text */}
             <p className="text-[11px] text-slate-500 text-center leading-relaxed">
-              By accessing the platform, you acknowledge and agree to our{' '}
-              <a href="#" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+              By accessing the platform, you acknowledge and agree to our{" "}
+              <a
+                href="#"
+                className="text-indigo-400 hover:text-indigo-300 transition-colors"
+              >
                 Terms of Service
-              </a>{' '}
-              and{' '}
-              <a href="#" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+              </a>{" "}
+              and{" "}
+              <a
+                href="#"
+                className="text-indigo-400 hover:text-indigo-300 transition-colors"
+              >
                 Privacy Policy
               </a>
               .
@@ -69,15 +83,24 @@ export default function LoginPage() {
 
         {/* Footer Links */}
         <div className="mt-12 flex justify-center items-center gap-6 text-xs font-medium text-slate-500 uppercase tracking-wider">
-          <a href="#" className="hover:text-white transition-colors duration-200">
+          <a
+            href="#"
+            className="hover:text-white transition-colors duration-200"
+          >
             Legal
           </a>
           <div className="w-1 h-1 bg-slate-700 rounded-full" />
-          <a href="#" className="hover:text-white transition-colors duration-200">
+          <a
+            href="#"
+            className="hover:text-white transition-colors duration-200"
+          >
             Status
           </a>
           <div className="w-1 h-1 bg-slate-700 rounded-full" />
-          <a href="#" className="hover:text-white transition-colors duration-200">
+          <a
+            href="#"
+            className="hover:text-white transition-colors duration-200"
+          >
             Support
           </a>
         </div>

@@ -1,7 +1,7 @@
-import SettingsComingSoon from '@/app/components/dashboard/settings/SettingsComingSoon';
+import SettingsComingSoon from "@/app/components/dashboard/settings/SettingsComingSoon";
 
 export const metadata = {
-  title: 'Webhooks | ResumeMindAI',
+  title: "Webhooks | ResumeMindAI",
 };
 
 export default function WebhooksPage() {

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -7,7 +7,10 @@ export default function Footer() {
         {/* Logo */}
         <div className="flex items-center space-x-3 mb-6 md:mb-0">
           <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-            <span className="material-symbols-outlined text-white text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
+            <span
+              className="material-symbols-outlined text-white text-lg"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
               hub
             </span>
           </div>
@@ -25,7 +28,10 @@ export default function Footer() {
           <a className="hover:text-primary transition-colors" href="#">
             Documentation
           </a>
-          <Link className="hover:text-primary transition-colors" href="/contact">
+          <Link
+            className="hover:text-primary transition-colors"
+            href="/contact"
+          >
             Contact Us
           </Link>
           <a
@@ -40,7 +46,9 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-6 md:mt-0 text-slate-500 text-xs italic">© 2026 ResumeMindAI</div>
+        <div className="mt-6 md:mt-0 text-slate-500 text-xs italic">
+          © 2026 ResumeMindAI
+        </div>
       </div>
     </footer>
   );

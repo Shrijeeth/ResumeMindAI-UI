@@ -1,4 +1,4 @@
-import { getAccessToken } from '@/app/lib/supabase/client';
+import { getAccessToken } from "@/app/lib/supabase/client";
 
 /**
  * API Error structure
@@ -21,7 +21,7 @@ export interface ApiResponse<T> {
 /**
  * Request options extending fetch options
  */
-export interface ApiRequestOptions extends Omit<RequestInit, 'body'> {
+export interface ApiRequestOptions extends Omit<RequestInit, "body"> {
   body?: Record<string, unknown> | FormData;
   skipAuth?: boolean;
 }
@@ -32,7 +32,7 @@ export interface ApiRequestOptions extends Omit<RequestInit, 'body'> {
 function getBaseUrl(): string {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   if (!baseUrl) {
-    throw new Error('NEXT_PUBLIC_API_URL environment variable is not set');
+    throw new Error("NEXT_PUBLIC_API_URL environment variable is not set");
   }
   return baseUrl;
 }
@@ -42,13 +42,18 @@ function getBaseUrl(): string {
  */
 async function apiClient<T>(
   endpoint: string,
-  options: ApiRequestOptions = {}
+  options: ApiRequestOptions = {},
 ): Promise<ApiResponse<T>> {
-  const { body, skipAuth = false, headers: customHeaders, ...fetchOptions } = options;
+  const {
+    body,
+    skipAuth = false,
+    headers: customHeaders,
+    ...fetchOptions
+  } = options;
 
   try {
     const baseUrl = getBaseUrl();
-    const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+    const url = `${baseUrl}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 
     // Build headers
     const headers: Record<string, string> = {
@@ -59,7 +64,7 @@ async function apiClient<T>(
     if (!skipAuth) {
       const token = await getAccessToken();
       if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+        headers["Authorization"] = `Bearer ${token}`;
       }
     }
 
@@ -70,7 +75,7 @@ async function apiClient<T>(
         processedBody = body;
         // Don't set Content-Type for FormData - browser will set it with boundary
       } else {
-        headers['Content-Type'] = 'application/json';
+        headers["Content-Type"] = "application/json";
         processedBody = JSON.stringify(body);
       }
     }
@@ -85,15 +90,15 @@ async function apiClient<T>(
     let data: T | null = null;
     let error: ApiError | null = null;
 
-    const contentType = response.headers.get('content-type');
-    if (contentType?.includes('application/json')) {
+    const contentType = response.headers.get("content-type");
+    if (contentType?.includes("application/json")) {
       const json = await response.json();
 
       if (response.ok) {
         data = json as T;
       } else {
         error = {
-          message: json.message || json.detail || 'An error occurred',
+          message: json.message || json.detail || "An error occurred",
           code: json.code,
           details: json.details || json,
         };
@@ -113,12 +118,13 @@ async function apiClient<T>(
     };
   } catch (err) {
     // Handle network errors or other exceptions
-    const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+    const errorMessage =
+      err instanceof Error ? err.message : "An unexpected error occurred";
     return {
       data: null,
       error: {
         message: errorMessage,
-        code: 'NETWORK_ERROR',
+        code: "NETWORK_ERROR",
       },
       status: 0,
     };
@@ -132,8 +138,11 @@ export const api = {
   /**
    * Make a GET request
    */
-  get<T>(endpoint: string, options?: Omit<ApiRequestOptions, 'body' | 'method'>) {
-    return apiClient<T>(endpoint, { ...options, method: 'GET' });
+  get<T>(
+    endpoint: string,
+    options?: Omit<ApiRequestOptions, "body" | "method">,
+  ) {
+    return apiClient<T>(endpoint, { ...options, method: "GET" });
   },
 
   /**
@@ -142,9 +151,9 @@ export const api = {
   post<T>(
     endpoint: string,
     body?: Record<string, unknown> | FormData,
-    options?: Omit<ApiRequestOptions, 'body' | 'method'>
+    options?: Omit<ApiRequestOptions, "body" | "method">,
   ) {
-    return apiClient<T>(endpoint, { ...options, method: 'POST', body });
+    return apiClient<T>(endpoint, { ...options, method: "POST", body });
   },
 
   /**
@@ -153,9 +162,9 @@ export const api = {
   put<T>(
     endpoint: string,
     body?: Record<string, unknown> | FormData,
-    options?: Omit<ApiRequestOptions, 'body' | 'method'>
+    options?: Omit<ApiRequestOptions, "body" | "method">,
   ) {
-    return apiClient<T>(endpoint, { ...options, method: 'PUT', body });
+    return apiClient<T>(endpoint, { ...options, method: "PUT", body });
   },
 
   /**
@@ -164,16 +173,19 @@ export const api = {
   patch<T>(
     endpoint: string,
     body?: Record<string, unknown> | FormData,
-    options?: Omit<ApiRequestOptions, 'body' | 'method'>
+    options?: Omit<ApiRequestOptions, "body" | "method">,
   ) {
-    return apiClient<T>(endpoint, { ...options, method: 'PATCH', body });
+    return apiClient<T>(endpoint, { ...options, method: "PATCH", body });
   },
 
   /**
    * Make a DELETE request
    */
-  delete<T>(endpoint: string, options?: Omit<ApiRequestOptions, 'body' | 'method'>) {
-    return apiClient<T>(endpoint, { ...options, method: 'DELETE' });
+  delete<T>(
+    endpoint: string,
+    options?: Omit<ApiRequestOptions, "body" | "method">,
+  ) {
+    return apiClient<T>(endpoint, { ...options, method: "DELETE" });
   },
 };
 

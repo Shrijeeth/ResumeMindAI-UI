@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 interface PipelineStats {
   tokensUsed: number;
@@ -8,17 +8,17 @@ interface PipelineStats {
 }
 
 interface PipelineStatusCardProps {
-  status?: 'active' | 'idle' | 'processing' | 'not_configured';
+  status?: "active" | "idle" | "processing" | "not_configured";
   llmProvider?: string | null;
   stats?: PipelineStats | null;
 }
 
 export default function PipelineStatusCard({
-  status = 'not_configured',
+  status = "not_configured",
   llmProvider,
   stats,
 }: PipelineStatusCardProps) {
-  const isConfigured = llmProvider && status !== 'not_configured';
+  const isConfigured = llmProvider && status !== "not_configured";
 
   // Empty state - no LLM provider configured
   if (!isConfigured) {
@@ -29,7 +29,9 @@ export default function PipelineStatusCard({
             Pipeline Status
           </h3>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-2xl sm:text-3xl font-bold text-slate-500">Not Configured</span>
+            <span className="text-2xl sm:text-3xl font-bold text-slate-500">
+              Not Configured
+            </span>
             <span className="relative flex h-3 w-3">
               <span className="relative inline-flex rounded-full h-3 w-3 bg-slate-500" />
             </span>
@@ -44,7 +46,9 @@ export default function PipelineStatusCard({
                 warning
               </span>
               <div>
-                <p className="text-sm text-orange-300 font-medium mb-1">LLM Provider Required</p>
+                <p className="text-sm text-orange-300 font-medium mb-1">
+                  LLM Provider Required
+                </p>
                 <p className="text-xs text-slate-400">
                   Configure an LLM provider to start analyzing resumes.
                 </p>
@@ -66,13 +70,15 @@ export default function PipelineStatusCard({
   }
 
   // Active state with data
-  const tokenPercentage = stats ? Math.round((stats.tokensUsed / stats.tokensLimit) * 100) : 0;
+  const tokenPercentage = stats
+    ? Math.round((stats.tokensUsed / stats.tokensLimit) * 100)
+    : 0;
 
   const statusConfig = {
-    active: { label: 'Active', color: 'bg-emerald-500' },
-    idle: { label: 'Idle', color: 'bg-slate-500' },
-    processing: { label: 'Processing', color: 'bg-blue-500' },
-    not_configured: { label: 'Not Configured', color: 'bg-slate-500' },
+    active: { label: "Active", color: "bg-emerald-500" },
+    idle: { label: "Idle", color: "bg-slate-500" },
+    processing: { label: "Processing", color: "bg-blue-500" },
+    not_configured: { label: "Not Configured", color: "bg-slate-500" },
   };
 
   const currentStatus = statusConfig[status];
@@ -84,7 +90,9 @@ export default function PipelineStatusCard({
           Pipeline Status
         </h3>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-2xl sm:text-3xl font-bold text-white">{currentStatus.label}</span>
+          <span className="text-2xl sm:text-3xl font-bold text-white">
+            {currentStatus.label}
+          </span>
           <span className="relative flex h-3 w-3">
             <span
               className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentStatus.color} opacity-75`}
@@ -95,7 +103,8 @@ export default function PipelineStatusCard({
           </span>
         </div>
         <p className="text-sm text-slate-400">
-          LLM Provider: <span className="text-primary font-medium">{llmProvider}</span>
+          LLM Provider:{" "}
+          <span className="text-primary font-medium">{llmProvider}</span>
         </p>
       </div>
 
@@ -117,8 +126,12 @@ export default function PipelineStatusCard({
         {/* Stats Grid */}
         <div className="flex gap-3">
           <div className="flex-1 bg-slate-800/50 rounded-lg p-3 text-center">
-            <div className="text-lg font-bold text-white">{stats?.resumesProcessed ?? 0}</div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-wide">Resumes</div>
+            <div className="text-lg font-bold text-white">
+              {stats?.resumesProcessed ?? 0}
+            </div>
+            <div className="text-[10px] text-slate-400 uppercase tracking-wide">
+              Resumes
+            </div>
           </div>
           <div className="flex-1 bg-slate-800/50 rounded-lg p-3 text-center">
             <div className="text-lg font-bold text-white">
@@ -128,7 +141,9 @@ export default function PipelineStatusCard({
                   : stats.graphNodes
                 : 0}
             </div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-wide">Entities</div>
+            <div className="text-[10px] text-slate-400 uppercase tracking-wide">
+              Entities
+            </div>
           </div>
         </div>
       </div>

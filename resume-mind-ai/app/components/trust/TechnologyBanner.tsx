@@ -1,9 +1,9 @@
 export default function TechnologyBanner() {
   const technologies = [
-    { icon: 'database', name: 'FalkorDB' },
-    { icon: 'terminal', name: 'LiteLLM' },
-    { icon: 'memory', name: 'OpenAI' },
-    { icon: 'token', name: 'Anthropic' }
+    { icon: "database", name: "FalkorDB" },
+    { icon: "terminal", name: "LiteLLM" },
+    { icon: "memory", name: "OpenAI" },
+    { icon: "token", name: "Anthropic" },
   ];
 
   return (
@@ -18,7 +18,9 @@ export default function TechnologyBanner() {
               key={index}
               className="flex items-center space-x-3 grayscale hover:grayscale-0 transition-all cursor-default"
             >
-              <span className="material-symbols-outlined text-3xl">{tech.icon}</span>
+              <span className="material-symbols-outlined text-3xl">
+                {tech.icon}
+              </span>
               <span className="text-xl font-bold font-mono">{tech.name}</span>
             </div>
           ))}

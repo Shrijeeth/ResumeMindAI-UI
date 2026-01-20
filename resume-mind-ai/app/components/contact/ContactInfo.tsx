@@ -10,25 +10,25 @@ interface ContactInfoItem {
 export default function ContactInfo() {
   const contactItems: ContactInfoItem[] = [
     {
-      icon: 'mail',
-      iconColor: 'bg-primary/10',
-      iconTextColor: 'text-primary',
-      title: 'Email Support',
-      description: 'arivuforge@gmail.com'
+      icon: "mail",
+      iconColor: "bg-primary/10",
+      iconTextColor: "text-primary",
+      title: "Email Support",
+      description: "arivuforge@gmail.com",
     },
     {
-      icon: 'schedule',
-      iconColor: 'bg-blue-500/10',
-      iconTextColor: 'text-blue-400',
-      title: 'Response Time',
-      description: 'Typically within 24 business hours.'
+      icon: "schedule",
+      iconColor: "bg-blue-500/10",
+      iconTextColor: "text-blue-400",
+      title: "Response Time",
+      description: "Typically within 24 business hours.",
     },
     {
-      icon: 'share',
-      iconColor: 'bg-emerald-500/10',
-      iconTextColor: 'text-emerald-400',
-      title: 'Social Presence',
-      description: '',
+      icon: "share",
+      iconColor: "bg-emerald-500/10",
+      iconTextColor: "text-emerald-400",
+      title: "Social Presence",
+      description: "",
       content: (
         <div className="flex gap-4">
           <a
@@ -52,28 +52,35 @@ export default function ContactInfo() {
             LinkedIn
           </a>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6">Get in Touch</h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+          Get in Touch
+        </h1>
         <p className="text-xl text-slate-400 leading-relaxed max-w-md">
-          Have questions about our graph-based career intelligence? We&apos;re here to help you map your future.
+          Have questions about our graph-based career intelligence? We&apos;re
+          here to help you map your future.
         </p>
       </div>
 
       <div className="space-y-8">
         {contactItems.map((item, index) => (
           <div key={index} className="flex items-start gap-5">
-            <div className={`w-12 h-12 rounded-xl ${item.iconColor} flex items-center justify-center ${item.iconTextColor}`}>
+            <div
+              className={`w-12 h-12 rounded-xl ${item.iconColor} flex items-center justify-center ${item.iconTextColor}`}
+            >
               <span className="material-symbols-outlined">{item.icon}</span>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-1">{item.title}</h4>
-              {item.description && <p className="text-slate-400">{item.description}</p>}
+              {item.description && (
+                <p className="text-slate-400">{item.description}</p>
+              )}
               {item.content && <div className="mt-4">{item.content}</div>}
             </div>
           </div>

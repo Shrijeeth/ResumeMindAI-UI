@@ -21,7 +21,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "ResumeMindAI - Build Your Professional Knowledge Graph",
-  description: "Transform your career history into an interactive, AI-powered intelligence map that reveals hidden strengths and opportunities.",
+  description:
+    "Transform your career history into an interactive, AI-powered intelligence map that reveals hidden strengths and opportunities.",
 };
 
 export default function RootLayout({

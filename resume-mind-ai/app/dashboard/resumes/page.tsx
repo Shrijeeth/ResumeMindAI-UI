@@ -1,17 +1,19 @@
-import { redirect } from 'next/navigation';
-import { createClient } from '@/app/lib/supabase/server';
-import ComingSoonPage from '@/app/components/dashboard/ComingSoonPage';
+import { redirect } from "next/navigation";
+import { createClient } from "@/app/lib/supabase/server";
+import ComingSoonPage from "@/app/components/dashboard/ComingSoonPage";
 
 export const metadata = {
-  title: 'My Resumes | ResumeMindAI',
+  title: "My Resumes | ResumeMindAI",
 };
 
 export default async function ResumesPage() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/auth/login');
+    redirect("/auth/login");
   }
 
   return (
@@ -20,10 +22,10 @@ export default async function ResumesPage() {
       description="Manage all your uploaded resumes, view extraction history, and organize your career documents."
       icon="description"
       features={[
-        'View all uploaded resumes',
-        'Track extraction status',
-        'Compare resume versions',
-        'Export to multiple formats',
+        "View all uploaded resumes",
+        "Track extraction status",
+        "Compare resume versions",
+        "Export to multiple formats",
       ]}
     />
   );

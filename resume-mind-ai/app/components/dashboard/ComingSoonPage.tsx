@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { User } from '@supabase/supabase-js';
-import DashboardLayout from './layout/DashboardLayout';
-import { createClient } from '@/app/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { User } from "@supabase/supabase-js";
+import DashboardLayout from "./layout/DashboardLayout";
+import { createClient } from "@/app/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface ComingSoonPageProps {
   title: string;
@@ -25,7 +25,9 @@ export default function ComingSoonPage({
   useEffect(() => {
     const getUser = async () => {
       const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       setUser(user);
     };
     getUser();
@@ -34,7 +36,7 @@ export default function ComingSoonPage({
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push('/auth/login');
+    router.push("/auth/login");
     router.refresh();
   };
 
@@ -52,7 +54,9 @@ export default function ComingSoonPage({
         <div className="glass-card p-8 rounded-2xl text-center">
           {/* Icon */}
           <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <span className="material-symbols-outlined text-primary text-4xl">{icon}</span>
+            <span className="material-symbols-outlined text-primary text-4xl">
+              {icon}
+            </span>
           </div>
 
           {/* Title */}
@@ -60,8 +64,12 @@ export default function ComingSoonPage({
 
           {/* Coming Soon Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-6">
-            <span className="material-symbols-outlined text-orange-400 text-sm">construction</span>
-            <span className="text-orange-400 text-sm font-medium">Coming Soon</span>
+            <span className="material-symbols-outlined text-orange-400 text-sm">
+              construction
+            </span>
+            <span className="text-orange-400 text-sm font-medium">
+              Coming Soon
+            </span>
           </div>
 
           {/* Description */}
@@ -75,7 +83,10 @@ export default function ComingSoonPage({
               </h3>
               <ul className="space-y-3">
                 {features.map((feature, index) => (
-                  <li key={index} className="flex items-center gap-3 text-slate-400">
+                  <li
+                    key={index}
+                    className="flex items-center gap-3 text-slate-400"
+                  >
                     <span className="material-symbols-outlined text-primary text-lg">
                       check_circle
                     </span>
@@ -88,10 +99,12 @@ export default function ComingSoonPage({
 
           {/* Back to Dashboard */}
           <button
-            onClick={() => router.push('/dashboard')}
+            onClick={() => router.push("/dashboard")}
             className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-violet-600 text-white rounded-lg font-medium transition-colors"
           >
-            <span className="material-symbols-outlined text-lg">arrow_back</span>
+            <span className="material-symbols-outlined text-lg">
+              arrow_back
+            </span>
             Back to Dashboard
           </button>
         </div>

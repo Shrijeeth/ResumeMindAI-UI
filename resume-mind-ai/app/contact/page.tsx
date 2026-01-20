@@ -1,12 +1,13 @@
-import { Metadata } from 'next';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
-import ContactInfo from '../components/contact/ContactInfo';
-import ContactForm from '../components/contact/ContactForm';
+import { Metadata } from "next";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import ContactInfo from "../components/contact/ContactInfo";
+import ContactForm from "../components/contact/ContactForm";
 
 export const metadata: Metadata = {
-  title: 'Contact Us - ResumeMindAI',
-  description: 'Get in touch with ResumeMindAI. Have questions about our graph-based career intelligence? We are here to help you map your future.'
+  title: "Contact Us - ResumeMindAI",
+  description:
+    "Get in touch with ResumeMindAI. Have questions about our graph-based career intelligence? We are here to help you map your future.",
 };
 
 export default function ContactPage() {
@@ -18,8 +19,22 @@ export default function ContactPage() {
           <circle cx="80" cy="20" r="1" fill="#8B5CF6" />
           <circle cx="90" cy="40" r="0.5" fill="#8B5CF6" />
           <circle cx="70" cy="50" r="0.7" fill="#8B5CF6" />
-          <line x1="80" y1="20" x2="90" y2="40" stroke="#8B5CF6" strokeWidth="0.1" />
-          <line x1="80" y1="20" x2="70" y2="50" stroke="#8B5CF6" strokeWidth="0.1" />
+          <line
+            x1="80"
+            y1="20"
+            x2="90"
+            y2="40"
+            stroke="#8B5CF6"
+            strokeWidth="0.1"
+          />
+          <line
+            x1="80"
+            y1="20"
+            x2="70"
+            y2="50"
+            stroke="#8B5CF6"
+            strokeWidth="0.1"
+          />
         </svg>
       </div>
 
@@ -28,8 +43,22 @@ export default function ContactPage() {
           <circle cx="20" cy="80" r="1" fill="#3B82F6" />
           <circle cx="10" cy="60" r="0.5" fill="#3B82F6" />
           <circle cx="30" cy="50" r="0.7" fill="#3B82F6" />
-          <line x1="20" y1="80" x2="10" y2="60" stroke="#3B82F6" strokeWidth="0.1" />
-          <line x1="20" y1="80" x2="30" y2="50" stroke="#3B82F6" strokeWidth="0.1" />
+          <line
+            x1="20"
+            y1="80"
+            x2="10"
+            y2="60"
+            stroke="#3B82F6"
+            strokeWidth="0.1"
+          />
+          <line
+            x1="20"
+            y1="80"
+            x2="30"
+            y2="50"
+            stroke="#3B82F6"
+            strokeWidth="0.1"
+          />
         </svg>
       </div>
 

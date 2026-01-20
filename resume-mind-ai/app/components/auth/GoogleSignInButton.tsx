@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { createClient } from '@/app/lib/supabase/client';
+import { useState } from "react";
+import { createClient } from "@/app/lib/supabase/client";
 
 export default function GoogleSignInButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,14 +13,14 @@ export default function GoogleSignInButton() {
     const supabase = createClient();
 
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
     if (error) {
-      console.error('OAuth error:', error.message);
+      console.error("OAuth error:", error.message);
       setIsLoading(false);
     }
     // Note: If successful, user is redirected to Google, so we don't reset isLoading
@@ -59,7 +59,11 @@ export default function GoogleSignInButton() {
         </>
       ) : (
         <>
-          <svg className="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
               fill="#4285F4"

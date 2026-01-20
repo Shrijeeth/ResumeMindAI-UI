@@ -1,4 +1,4 @@
-import { ProviderCardSkeleton } from '@/app/components/dashboard/skeletons';
+import { ProviderCardSkeleton } from "@/app/components/dashboard/skeletons";
 
 export default function LLMProvidersLoading() {
   return (

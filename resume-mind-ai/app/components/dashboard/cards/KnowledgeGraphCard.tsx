@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 interface KnowledgeGraphCardProps {
   topNode?: string | null;
@@ -20,14 +20,20 @@ export default function KnowledgeGraphCard({
     return (
       <div className="glass-card rounded-2xl p-6 flex flex-col">
         <div className="mb-4">
-          <h3 className="font-bold text-lg text-white">Career Knowledge Graph</h3>
-          <p className="text-sm text-slate-400">Visual summary of your top skills & relations.</p>
+          <h3 className="font-bold text-lg text-white">
+            Career Knowledge Graph
+          </h3>
+          <p className="text-sm text-slate-400">
+            Visual summary of your top skills & relations.
+          </p>
         </div>
 
         {/* Empty Graph Visualization */}
         <div className="flex-1 bg-slate-900/50 rounded-xl relative overflow-hidden flex flex-col items-center justify-center min-h-[200px] border border-slate-700/50 border-dashed">
           <div className="w-14 h-14 bg-slate-800/50 rounded-xl flex items-center justify-center mb-4">
-            <span className="material-symbols-outlined text-2xl text-slate-500">hub</span>
+            <span className="material-symbols-outlined text-2xl text-slate-500">
+              hub
+            </span>
           </div>
           <h4 className="text-white font-medium mb-1">No Graph Data</h4>
           <p className="text-slate-400 text-xs text-center max-w-[200px]">
@@ -52,27 +58,103 @@ export default function KnowledgeGraphCard({
     <div className="glass-card rounded-2xl p-6 flex flex-col">
       <div className="mb-4">
         <h3 className="font-bold text-lg text-white">Career Knowledge Graph</h3>
-        <p className="text-sm text-slate-400">Visual summary of your top skills & relations.</p>
+        <p className="text-sm text-slate-400">
+          Visual summary of your top skills & relations.
+        </p>
       </div>
 
       {/* Graph Visualization */}
       <div className="flex-1 bg-slate-900/50 rounded-xl relative overflow-hidden flex items-center justify-center min-h-[200px] border border-slate-700/50">
         {/* SVG Graph */}
         <div className="absolute inset-0 opacity-60">
-          <svg className="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             {/* Connection lines */}
-            <line x1="100" y1="100" x2="60" y2="50" stroke="#4b5563" strokeWidth="1" />
-            <line x1="100" y1="100" x2="140" y2="50" stroke="#4b5563" strokeWidth="1" />
-            <line x1="100" y1="100" x2="50" y2="100" stroke="#4b5563" strokeWidth="1" />
-            <line x1="100" y1="100" x2="150" y2="100" stroke="#4b5563" strokeWidth="1" />
-            <line x1="100" y1="100" x2="60" y2="150" stroke="#4b5563" strokeWidth="1" />
-            <line x1="100" y1="100" x2="140" y2="150" stroke="#4b5563" strokeWidth="1" />
+            <line
+              x1="100"
+              y1="100"
+              x2="60"
+              y2="50"
+              stroke="#4b5563"
+              strokeWidth="1"
+            />
+            <line
+              x1="100"
+              y1="100"
+              x2="140"
+              y2="50"
+              stroke="#4b5563"
+              strokeWidth="1"
+            />
+            <line
+              x1="100"
+              y1="100"
+              x2="50"
+              y2="100"
+              stroke="#4b5563"
+              strokeWidth="1"
+            />
+            <line
+              x1="100"
+              y1="100"
+              x2="150"
+              y2="100"
+              stroke="#4b5563"
+              strokeWidth="1"
+            />
+            <line
+              x1="100"
+              y1="100"
+              x2="60"
+              y2="150"
+              stroke="#4b5563"
+              strokeWidth="1"
+            />
+            <line
+              x1="100"
+              y1="100"
+              x2="140"
+              y2="150"
+              stroke="#4b5563"
+              strokeWidth="1"
+            />
 
             {/* Secondary connections */}
-            <line x1="60" y1="50" x2="50" y2="100" stroke="#4b5563" strokeWidth="0.5" />
-            <line x1="140" y1="50" x2="150" y2="100" stroke="#4b5563" strokeWidth="0.5" />
-            <line x1="50" y1="100" x2="60" y2="150" stroke="#4b5563" strokeWidth="0.5" />
-            <line x1="150" y1="100" x2="140" y2="150" stroke="#4b5563" strokeWidth="0.5" />
+            <line
+              x1="60"
+              y1="50"
+              x2="50"
+              y2="100"
+              stroke="#4b5563"
+              strokeWidth="0.5"
+            />
+            <line
+              x1="140"
+              y1="50"
+              x2="150"
+              y2="100"
+              stroke="#4b5563"
+              strokeWidth="0.5"
+            />
+            <line
+              x1="50"
+              y1="100"
+              x2="60"
+              y2="150"
+              stroke="#4b5563"
+              strokeWidth="0.5"
+            />
+            <line
+              x1="150"
+              y1="100"
+              x2="140"
+              y2="150"
+              stroke="#4b5563"
+              strokeWidth="0.5"
+            />
 
             {/* Center node (main skill) */}
             <circle cx="100" cy="100" r="10" fill="#6366f1" opacity="0.3" />

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { User } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
-import Sidebar from './Sidebar';
-import DashboardHeader from './DashboardHeader';
+import { User } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import Sidebar from "./Sidebar";
+import DashboardHeader from "./DashboardHeader";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -23,12 +23,12 @@ export default function DashboardLayout({
   // Lock body scroll while the mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
@@ -48,7 +48,7 @@ export default function DashboardLayout({
       {/* Mobile Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out lg:hidden ${
-          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full bg-slate-900 border-r border-slate-700/50">
@@ -56,7 +56,9 @@ export default function DashboardLayout({
           <div className="flex items-center justify-between px-6 h-16 border-b border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-lg">hub</span>
+                <span className="material-symbols-outlined text-white text-lg">
+                  hub
+                </span>
               </div>
               <span className="font-semibold text-white">
                 ResumeMind<span className="text-primary">AI</span>

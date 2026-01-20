@@ -1,4 +1,4 @@
-export type AnalysisStatus = 'completed' | 'processing' | 'failed';
+export type AnalysisStatus = "completed" | "processing" | "failed";
 
 interface AnalysisItemProps {
   id: string;
@@ -16,39 +16,42 @@ export default function AnalysisItem({
   timestamp,
   onView,
 }: AnalysisItemProps) {
-  const statusConfig: Record<AnalysisStatus, {
-    label: string;
-    bgColor: string;
-    textColor: string;
-    borderColor: string;
-    iconBg: string;
-    iconText: string;
-    animate?: boolean;
-  }> = {
+  const statusConfig: Record<
+    AnalysisStatus,
+    {
+      label: string;
+      bgColor: string;
+      textColor: string;
+      borderColor: string;
+      iconBg: string;
+      iconText: string;
+      animate?: boolean;
+    }
+  > = {
     completed: {
-      label: 'Completed',
-      bgColor: 'bg-emerald-500/10',
-      textColor: 'text-emerald-400',
-      borderColor: 'border-emerald-500/20',
-      iconBg: 'bg-emerald-900/30',
-      iconText: 'text-emerald-400',
+      label: "Completed",
+      bgColor: "bg-emerald-500/10",
+      textColor: "text-emerald-400",
+      borderColor: "border-emerald-500/20",
+      iconBg: "bg-emerald-900/30",
+      iconText: "text-emerald-400",
     },
     processing: {
-      label: 'Processing',
-      bgColor: 'bg-blue-500/10',
-      textColor: 'text-blue-400',
-      borderColor: 'border-blue-500/20',
-      iconBg: 'bg-blue-900/30',
-      iconText: 'text-blue-400',
+      label: "Processing",
+      bgColor: "bg-blue-500/10",
+      textColor: "text-blue-400",
+      borderColor: "border-blue-500/20",
+      iconBg: "bg-blue-900/30",
+      iconText: "text-blue-400",
       animate: true,
     },
     failed: {
-      label: 'Failed',
-      bgColor: 'bg-red-500/10',
-      textColor: 'text-red-400',
-      borderColor: 'border-red-500/20',
-      iconBg: 'bg-red-900/30',
-      iconText: 'text-red-400',
+      label: "Failed",
+      bgColor: "bg-red-500/10",
+      textColor: "text-red-400",
+      borderColor: "border-red-500/20",
+      iconBg: "bg-red-900/30",
+      iconText: "text-red-400",
     },
   };
 
@@ -66,8 +69,8 @@ export default function AnalysisItem({
         <div>
           <h4 className="font-medium text-white">{fileName}</h4>
           <p className="text-xs text-slate-400">
-            {status === 'processing'
-              ? 'Processing now...'
+            {status === "processing"
+              ? "Processing now..."
               : `${timestamp} • ${nodesExtracted} Skills Extracted`}
           </p>
         </div>
@@ -75,7 +78,7 @@ export default function AnalysisItem({
 
       <div className="flex items-center gap-4">
         <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.bgColor} ${config.textColor} ${config.borderColor} ${config.animate ? 'animate-pulse' : ''}`}
+          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.bgColor} ${config.textColor} ${config.borderColor} ${config.animate ? "animate-pulse" : ""}`}
         >
           {config.label}
         </span>

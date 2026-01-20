@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { apiFetch, ApiError } from './api';
+import { useState, useEffect, useCallback, useRef } from "react";
+import { apiFetch, ApiError } from "./api";
 
 interface UseApiOptions {
   /** Revalidate when window regains focus (default: true) */
@@ -53,7 +53,7 @@ const CACHE_TTL = 30000; // 30 seconds default TTL
  */
 export function useApi<T>(
   path: string | null,
-  options: UseApiOptions = {}
+  options: UseApiOptions = {},
 ): UseApiReturn<T> {
   const {
     revalidateOnFocus = true,
@@ -112,12 +112,12 @@ export function useApi<T>(
         }
       }
     },
-    [path, dedupingInterval, data]
+    [path, dedupingInterval, data],
   );
 
   const mutate = useCallback(
     async (newData?: T | Promise<T> | ((current?: T) => T)) => {
-      if (typeof newData === 'function') {
+      if (typeof newData === "function") {
         const fn = newData as (current?: T) => T;
         const updated = fn(data);
         setData(updated);
@@ -134,7 +134,7 @@ export function useApi<T>(
         await fetchData(false);
       }
     },
-    [data, path, fetchData]
+    [data, path, fetchData],
   );
 
   // Initial fetch
@@ -148,20 +148,20 @@ export function useApi<T>(
 
   // Revalidate on focus
   useEffect(() => {
-    if (!revalidateOnFocus || typeof window === 'undefined') return;
+    if (!revalidateOnFocus || typeof window === "undefined") return;
 
     const onFocus = () => fetchData(false);
-    window.addEventListener('focus', onFocus);
-    return () => window.removeEventListener('focus', onFocus);
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
   }, [revalidateOnFocus, fetchData]);
 
   // Revalidate on reconnect
   useEffect(() => {
-    if (!revalidateOnReconnect || typeof window === 'undefined') return;
+    if (!revalidateOnReconnect || typeof window === "undefined") return;
 
     const onOnline = () => fetchData(false);
-    window.addEventListener('online', onOnline);
-    return () => window.removeEventListener('online', onOnline);
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
   }, [revalidateOnReconnect, fetchData]);
 
   // Refresh interval
