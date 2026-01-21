@@ -3,27 +3,36 @@
 import { useState } from "react";
 import { createClient } from "@/app/lib/supabase/client";
 
+export async function handleGoogleOAuth(
+  isLoading: boolean,
+  setIsLoading: (value: boolean) => void,
+  createClientFn = createClient,
+  windowObj: typeof window = window,
+) {
+  if (isLoading) return;
+
+  setIsLoading(true);
+  const supabase = createClientFn();
+
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${windowObj.location.origin}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    console.error("OAuth error:", error.message);
+    setIsLoading(false);
+  }
+  // Note: If successful, user is redirected to Google, so we don't reset isLoading
+}
+
 export default function GoogleSignInButton() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      console.error("OAuth error:", error.message);
-      setIsLoading(false);
-    }
-    // Note: If successful, user is redirected to Google, so we don't reset isLoading
+    await handleGoogleOAuth(isLoading, setIsLoading);
   };
 
   return (

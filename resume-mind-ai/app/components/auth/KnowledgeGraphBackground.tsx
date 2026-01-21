@@ -4,6 +4,8 @@ export default function KnowledgeGraphBackground() {
       <svg
         className="absolute w-full h-full opacity-40"
         xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-hidden="true"
       >
         <defs>
           <pattern
@@ -59,7 +61,10 @@ export default function KnowledgeGraphBackground() {
       </svg>
 
       {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#0f172a] via-transparent to-[#0f172a] opacity-90" />
+      <div
+        data-testid="kg-gradient-overlay"
+        className="absolute inset-0 bg-gradient-to-tr from-[#0f172a] via-transparent to-[#0f172a] opacity-90"
+      />
     </div>
   );
 }
