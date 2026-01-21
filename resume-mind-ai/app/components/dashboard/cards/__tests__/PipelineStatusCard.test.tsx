@@ -55,7 +55,11 @@ describe("PipelineStatusCard", () => {
 
   it("shows idle state with provider but no stats", () => {
     render(
-      <PipelineStatusCard status="idle" llmProvider="anthropic" stats={undefined} />,
+      <PipelineStatusCard
+        status="idle"
+        llmProvider="anthropic"
+        stats={undefined}
+      />,
     );
 
     expect(screen.getByText(/pipeline status/i)).toBeVisible();
@@ -72,7 +76,12 @@ describe("PipelineStatusCard", () => {
       <PipelineStatusCard
         status="processing"
         llmProvider="groq"
-        stats={{ tokensUsed: 5, tokensLimit: 20, resumesProcessed: 3, graphNodes: 999 }}
+        stats={{
+          tokensUsed: 5,
+          tokensLimit: 20,
+          resumesProcessed: 3,
+          graphNodes: 999,
+        }}
       />,
     );
 
