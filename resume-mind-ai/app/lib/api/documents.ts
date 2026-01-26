@@ -32,7 +32,7 @@ export async function listDocuments(filters: DocumentFilters = {}) {
   }
 
   const query = params.toString();
-  const path = query ? `${DOCUMENTS_BASE}?${query}` : DOCUMENTS_BASE;
+  const path = query ? `${DOCUMENTS_BASE}/?${query}` : DOCUMENTS_BASE;
 
   return api.get<DocumentListItem[]>(path);
 }

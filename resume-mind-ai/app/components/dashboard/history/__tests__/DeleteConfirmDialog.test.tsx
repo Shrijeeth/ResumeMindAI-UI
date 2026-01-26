@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DeleteConfirmDialog from "../DeleteConfirmDialog";
 
@@ -109,6 +109,36 @@ describe("DeleteConfirmDialog", () => {
     }
 
     expect(onCancel).not.toHaveBeenCalled();
+  });
+
+  it("calls onCancel when Escape is pressed", async () => {
+    const onCancel = vi.fn();
+    render(<DeleteConfirmDialog {...defaultProps} onCancel={onCancel} />);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(onCancel).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not call onCancel on Escape when isDeleting", async () => {
+    const onCancel = vi.fn();
+    render(
+      <DeleteConfirmDialog {...defaultProps} onCancel={onCancel} isDeleting />,
+    );
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(onCancel).not.toHaveBeenCalled();
+  });
+
+  it("locks and restores body scroll when opened and closed", () => {
+    const { rerender } = render(<DeleteConfirmDialog {...defaultProps} />);
+
+    expect(document.body.style.overflow).toBe("hidden");
+
+    rerender(<DeleteConfirmDialog {...defaultProps} isOpen={false} />);
+
+    expect(document.body.style.overflow).toBe("");
   });
 
   it("has proper accessibility attributes", () => {

@@ -41,6 +41,7 @@ export default function DocumentDetailPanel({
   const [docDetail, setDocDetail] = useState<DocumentDetail | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const confidenceText = formatConfidence(docDetail?.classification_confidence);
 
   useEffect(() => {
     if (!documentId) {
@@ -190,12 +191,9 @@ export default function DocumentDetailPanel({
                 <div className="glass-card rounded-xl p-4 space-y-3">
                   <div className="flex items-center gap-3">
                     <StatusBadge status={docDetail.status} />
-                    {docDetail.classification_confidence !== undefined && (
-                      <span className="text-xs text-slate-500">
-                        Confidence:{" "}
-                        {formatConfidence(docDetail.classification_confidence)}
-                      </span>
-                    )}
+                    <span className="text-xs text-slate-500">
+                      Confidence: {confidenceText}
+                    </span>
                   </div>
                   {docDetail.progress_message && (
                     <p className="text-sm text-slate-400">
