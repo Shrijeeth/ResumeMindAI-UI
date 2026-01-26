@@ -8,8 +8,16 @@ import ConfigureProviderForm, {
 describe("ConfigureProviderForm", () => {
   const mockProviderOptions = [
     { value: "openai" as ProviderType, label: "OpenAI", logoInitials: "OA" },
-    { value: "anthropic" as ProviderType, label: "Anthropic", logoInitials: "AP" },
-    { value: "google-gemini" as ProviderType, label: "Google Gemini", logoInitials: "GG" },
+    {
+      value: "anthropic" as ProviderType,
+      label: "Anthropic",
+      logoInitials: "AP",
+    },
+    {
+      value: "google-gemini" as ProviderType,
+      label: "Google Gemini",
+      logoInitials: "GG",
+    },
   ];
 
   const baseProps = {
@@ -27,7 +35,9 @@ describe("ConfigureProviderForm", () => {
     render(<ConfigureProviderForm {...baseProps} />);
 
     expect(screen.getByText("Configure Provider")).toBeVisible();
-    expect(screen.getByText("Connect a new model or inference endpoint.")).toBeVisible();
+    expect(
+      screen.getByText("Connect a new model or inference endpoint."),
+    ).toBeVisible();
   });
 
   it("renders edit mode form with correct title", () => {
@@ -49,7 +59,7 @@ describe("ConfigureProviderForm", () => {
         {...baseProps}
         mode="edit"
         initialData={initialData}
-      />
+      />,
     );
 
     expect(screen.getByDisplayValue("claude-3-opus")).toBeVisible();
@@ -69,17 +79,15 @@ describe("ConfigureProviderForm", () => {
   it("calls onSave with form data when submitted", async () => {
     const user = userEvent.setup();
     const onSave = vi.fn();
-    
-    render(
-      <ConfigureProviderForm
-        {...baseProps}
-        onSave={onSave}
-      />
-    );
+
+    render(<ConfigureProviderForm {...baseProps} onSave={onSave} />);
 
     // Fill out the form
     await user.type(screen.getByPlaceholderText(/e\.g\. gpt-4/i), "gpt-4");
-    await user.type(screen.getByPlaceholderText("https://api.openai.com/v1"), "https://api.openai.com/v1");
+    await user.type(
+      screen.getByPlaceholderText("https://api.openai.com/v1"),
+      "https://api.openai.com/v1",
+    );
     await user.type(screen.getByPlaceholderText("sk-..."), "sk-openai-123");
 
     // Submit the form
@@ -96,13 +104,8 @@ describe("ConfigureProviderForm", () => {
   it("calls onCancel when cancel button is clicked", async () => {
     const user = userEvent.setup();
     const onCancel = vi.fn();
-    
-    render(
-      <ConfigureProviderForm
-        {...baseProps}
-        onCancel={onCancel}
-      />
-    );
+
+    render(<ConfigureProviderForm {...baseProps} onCancel={onCancel} />);
 
     await user.click(screen.getByText("Cancel"));
     expect(onCancel).toHaveBeenCalledTimes(1);
@@ -110,7 +113,7 @@ describe("ConfigureProviderForm", () => {
 
   it("toggles API key visibility when eye icon is clicked", async () => {
     const user = userEvent.setup();
-    
+
     render(<ConfigureProviderForm {...baseProps} />);
 
     const apiKeyInput = screen.getByPlaceholderText("sk-...");
@@ -129,12 +132,7 @@ describe("ConfigureProviderForm", () => {
   });
 
   it("disables all buttons when isSaving is true", () => {
-    render(
-      <ConfigureProviderForm
-        {...baseProps}
-        isSaving={true}
-      />
-    );
+    render(<ConfigureProviderForm {...baseProps} isSaving={true} />);
 
     expect(screen.getByText("Saving...")).toBeDisabled();
     expect(screen.getByText("Cancel")).toBeDisabled();
@@ -153,7 +151,7 @@ describe("ConfigureProviderForm", () => {
 
   it("updates provider type when select value changes", async () => {
     const user = userEvent.setup();
-    
+
     render(<ConfigureProviderForm {...baseProps} />);
 
     const select = screen.getByDisplayValue("OpenAI");
@@ -178,13 +176,8 @@ describe("ConfigureProviderForm", () => {
   it("handles form submission with empty optional fields", async () => {
     const user = userEvent.setup();
     const onSave = vi.fn();
-    
-    render(
-      <ConfigureProviderForm
-        {...baseProps}
-        onSave={onSave}
-      />
-    );
+
+    render(<ConfigureProviderForm {...baseProps} onSave={onSave} />);
 
     // Only fill required fields
     await user.type(screen.getByPlaceholderText(/e\.g\. gpt-4/i), "gpt-4");
@@ -203,13 +196,9 @@ describe("ConfigureProviderForm", () => {
   it("prevents form submission when saving", async () => {
     const user = userEvent.setup();
     const onSave = vi.fn();
-    
+
     render(
-      <ConfigureProviderForm
-        {...baseProps}
-        onSave={onSave}
-        isSaving={true}
-      />
+      <ConfigureProviderForm {...baseProps} onSave={onSave} isSaving={true} />,
     );
 
     // Try to submit form by clicking the disabled save button
@@ -222,7 +211,9 @@ describe("ConfigureProviderForm", () => {
     render(<ConfigureProviderForm {...baseProps} />);
 
     expect(screen.getByPlaceholderText(/e\.g\. gpt-4/i)).toBeVisible();
-    expect(screen.getByPlaceholderText("https://api.openai.com/v1")).toBeVisible();
+    expect(
+      screen.getByPlaceholderText("https://api.openai.com/v1"),
+    ).toBeVisible();
     expect(screen.getByPlaceholderText("sk-...")).toBeVisible();
   });
 

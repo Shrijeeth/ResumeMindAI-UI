@@ -4,7 +4,8 @@ import SettingsComingSoon from "../SettingsComingSoon";
 describe("SettingsComingSoon", () => {
   const baseProps = {
     title: "Advanced Settings",
-    description: "Configure advanced provider settings, custom endpoints, and performance optimizations.",
+    description:
+      "Configure advanced provider settings, custom endpoints, and performance optimizations.",
     icon: "settings",
   };
 
@@ -12,7 +13,9 @@ describe("SettingsComingSoon", () => {
     render(<SettingsComingSoon {...baseProps} />);
 
     expect(screen.getByText("Advanced Settings")).toBeVisible();
-    expect(screen.getByText(/configure advanced provider settings/i)).toBeVisible();
+    expect(
+      screen.getByText(/configure advanced provider settings/i),
+    ).toBeVisible();
     expect(screen.getByText("settings")).toBeVisible();
   });
 
@@ -22,7 +25,7 @@ describe("SettingsComingSoon", () => {
     const badge = screen.getByText("Coming Soon");
     expect(badge).toBeVisible();
     expect(badge.className).toContain("text-orange-400");
-    
+
     const badgeContainer = badge.closest("div");
     expect(badgeContainer?.className).toContain("bg-orange-500/10");
     expect(badgeContainer?.className).toContain("border-orange-500/20");
@@ -75,7 +78,8 @@ describe("SettingsComingSoon", () => {
   it("renders with different props", () => {
     const differentProps = {
       title: "Security Settings",
-      description: "Manage authentication, encryption, and access control for your providers.",
+      description:
+        "Manage authentication, encryption, and access control for your providers.",
       icon: "security",
     };
 
@@ -92,7 +96,9 @@ describe("SettingsComingSoon", () => {
     const title = screen.getByText("Advanced Settings");
     expect(title.className).toContain("text-xl", "font-bold", "text-white");
 
-    const description = screen.getByText(/configure advanced provider settings/i);
+    const description = screen.getByText(
+      /configure advanced provider settings/i,
+    );
     expect(description.className).toContain("text-slate-400", "text-sm");
   });
 

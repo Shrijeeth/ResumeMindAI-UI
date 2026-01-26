@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
@@ -17,6 +17,7 @@ import {
   KnowledgeGraphSkeleton,
   InsightCardSkeleton,
 } from "@/app/components/dashboard/skeletons";
+import { uploadDocument } from "@/app/lib/api/documents";
 
 interface DashboardContentProps {
   user: User;
@@ -85,6 +86,7 @@ const emptyInsights = [
 
 export default function DashboardContent({ user }: DashboardContentProps) {
   const router = useRouter();
+  const [isUploading, setIsUploading] = useState(false);
 
   // Fetch the active LLM provider specifically
   const { data: activeProvider, isLoading } = useApi<ProviderApi>(
@@ -99,9 +101,15 @@ export default function DashboardContent({ user }: DashboardContentProps) {
     router.refresh();
   };
 
-  const handleFileSelect = (file: File) => {
-    console.log("File selected:", file.name);
-    // TODO: Implement file upload via API client
+  const handleFileSelect = async (file: File) => {
+    setIsUploading(true);
+    try {
+      await uploadDocument(file);
+      router.push("/dashboard/history");
+    } catch (err) {
+      console.error("Upload failed:", err);
+      setIsUploading(false);
+    }
   };
 
   const handleViewAnalysis = (id: string) => {
@@ -139,7 +147,10 @@ export default function DashboardContent({ user }: DashboardContentProps) {
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Row 1: Upload + Pipeline Status */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <UploadCard onFileSelect={handleFileSelect} />
+          <UploadCard
+            onFileSelect={handleFileSelect}
+            isUploading={isUploading}
+          />
           {isLoading ? (
             <PipelineStatusSkeleton />
           ) : (
@@ -160,7 +171,7 @@ export default function DashboardContent({ user }: DashboardContentProps) {
               <RecentAnalysesList
                 analyses={[]}
                 onViewAnalysis={handleViewAnalysis}
-                onViewAll={() => router.push("/dashboard/resumes")}
+                onViewAll={() => router.push("/dashboard/history")}
               />
             )}
           </div>
