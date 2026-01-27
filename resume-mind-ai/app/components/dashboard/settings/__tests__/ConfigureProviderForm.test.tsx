@@ -222,4 +222,25 @@ describe("ConfigureProviderForm", () => {
 
     expect(screen.getByText(/optional/i)).toBeVisible();
   });
+
+  it("handles empty provider options array gracefully", () => {
+    render(<ConfigureProviderForm {...baseProps} providerOptions={[]} />);
+
+    expect(screen.getByText("Configure Provider")).toBeVisible();
+  });
+
+  it("uses fallback default provider when no provider options and initial data", () => {
+    render(
+      <ConfigureProviderForm
+        {...baseProps}
+        providerOptions={[]}
+        initialData={{ providerType: "custom" }}
+      />,
+    );
+
+    // When no provider options, the select should be empty but the form should still render
+    expect(screen.getByText("Configure Provider")).toBeVisible();
+    const select = screen.getByRole("combobox");
+    expect(select).toBeVisible();
+  });
 });

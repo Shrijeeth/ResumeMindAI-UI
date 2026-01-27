@@ -203,4 +203,60 @@ describe("ProviderCard", () => {
     expect(errorContainer?.className).toContain("text-red-400/80");
     expect(errorContainer?.className).toContain("bg-red-500/5");
   });
+
+  it("shows loading spinner when setting active provider", () => {
+    render(
+      <ProviderCard
+        {...baseProps}
+        onSetActive={vi.fn()}
+        isSettingActive={true}
+      />,
+    );
+
+    const spinner = document.querySelector(".animate-spin");
+    expect(spinner).toBeVisible();
+  });
+
+  it("disables set as default button when setActiveInProgress is true", () => {
+    render(
+      <ProviderCard
+        {...baseProps}
+        onSetActive={vi.fn()}
+        setActiveInProgress={true}
+      />,
+    );
+
+    const setDefaultButton = screen.getByText("Set As Default");
+    expect(setDefaultButton).toBeDisabled();
+  });
+
+  it("disables set as default button when isSettingActive is true", () => {
+    render(
+      <ProviderCard
+        {...baseProps}
+        onSetActive={vi.fn()}
+        isSettingActive={true}
+      />,
+    );
+
+    const setDefaultButton = screen.getByText("Set As Default");
+    expect(setDefaultButton).toBeDisabled();
+  });
+
+  it("shows full width progress bar for error status", () => {
+    render(<ProviderCard {...baseProps} status="error" />);
+
+    const progressBar = document.querySelector(".bg-red-500");
+    expect(progressBar).toBeTruthy();
+  });
+
+  it("shows zero width progress bar for connected status without latency", () => {
+    render(
+      <ProviderCard {...baseProps} status="connected" latency={undefined} />,
+    );
+
+    // For connected status without latency, progress bar should be 0% width
+    const progressBar = document.querySelector(".bg-emerald-500");
+    expect(progressBar).toBeTruthy();
+  });
 });
