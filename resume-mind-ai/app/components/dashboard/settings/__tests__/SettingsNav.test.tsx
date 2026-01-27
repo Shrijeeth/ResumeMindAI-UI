@@ -59,11 +59,17 @@ describe("SettingsNav", () => {
 
     const navItems = screen.getAllByTestId("settings-nav-item");
     const llmProviderNav = navItems.find(
-      (item) => item.querySelector('[data-testid="nav-label"]')?.textContent === "LLM Providers",
+      (item) =>
+        item.querySelector('[data-testid="nav-label"]')?.textContent ===
+        "LLM Providers",
     );
     expect(llmProviderNav).toBeTruthy();
-    expect(llmProviderNav?.querySelector('[data-testid="nav-icon"]')).toHaveTextContent("smart_toy");
-    expect(llmProviderNav?.querySelector('[data-testid="nav-href"]')).toHaveTextContent("/dashboard/settings/llm-providers");
+    expect(
+      llmProviderNav?.querySelector('[data-testid="nav-icon"]'),
+    ).toHaveTextContent("smart_toy");
+    expect(
+      llmProviderNav?.querySelector('[data-testid="nav-href"]'),
+    ).toHaveTextContent("/dashboard/settings/llm-providers");
   });
 
   it("renders API Keys item with Soon badge", () => {
@@ -76,12 +82,20 @@ describe("SettingsNav", () => {
 
     const navItems = screen.getAllByTestId("settings-nav-item");
     const apiKeyNav = navItems.find(
-      (item) => item.querySelector('[data-testid="nav-label"]')?.textContent === "API Keys",
+      (item) =>
+        item.querySelector('[data-testid="nav-label"]')?.textContent ===
+        "API Keys",
     );
     expect(apiKeyNav).toBeTruthy();
-    expect(apiKeyNav?.querySelector('[data-testid="nav-icon"]')).toHaveTextContent("key");
-    expect(apiKeyNav?.querySelector('[data-testid="nav-href"]')).toHaveTextContent("/dashboard/settings/api-keys");
-    expect(apiKeyNav?.querySelector('[data-testid="nav-badge"]')).toHaveTextContent("Soon");
+    expect(
+      apiKeyNav?.querySelector('[data-testid="nav-icon"]'),
+    ).toHaveTextContent("key");
+    expect(
+      apiKeyNav?.querySelector('[data-testid="nav-href"]'),
+    ).toHaveTextContent("/dashboard/settings/api-keys");
+    expect(
+      apiKeyNav?.querySelector('[data-testid="nav-badge"]'),
+    ).toHaveTextContent("Soon");
   });
 
   it("renders Webhooks item with Soon badge", () => {
@@ -94,12 +108,20 @@ describe("SettingsNav", () => {
 
     const navItems = screen.getAllByTestId("settings-nav-item");
     const webhookNav = navItems.find(
-      (item) => item.querySelector('[data-testid="nav-label"]')?.textContent === "Webhooks",
+      (item) =>
+        item.querySelector('[data-testid="nav-label"]')?.textContent ===
+        "Webhooks",
     );
     expect(webhookNav).toBeTruthy();
-    expect(webhookNav?.querySelector('[data-testid="nav-icon"]')).toHaveTextContent("webhook");
-    expect(webhookNav?.querySelector('[data-testid="nav-href"]')).toHaveTextContent("/dashboard/settings/webhooks");
-    expect(webhookNav?.querySelector('[data-testid="nav-badge"]')).toHaveTextContent("Soon");
+    expect(
+      webhookNav?.querySelector('[data-testid="nav-icon"]'),
+    ).toHaveTextContent("webhook");
+    expect(
+      webhookNav?.querySelector('[data-testid="nav-href"]'),
+    ).toHaveTextContent("/dashboard/settings/webhooks");
+    expect(
+      webhookNav?.querySelector('[data-testid="nav-badge"]'),
+    ).toHaveTextContent("Soon");
   });
 
   it("renders Notifications item with Soon badge", () => {
@@ -112,12 +134,20 @@ describe("SettingsNav", () => {
 
     const navItems = screen.getAllByTestId("settings-nav-item");
     const notificationsNav = navItems.find(
-      (item) => item.querySelector('[data-testid="nav-label"]')?.textContent === "Notifications",
+      (item) =>
+        item.querySelector('[data-testid="nav-label"]')?.textContent ===
+        "Notifications",
     );
     expect(notificationsNav).toBeTruthy();
-    expect(notificationsNav?.querySelector('[data-testid="nav-icon"]')).toHaveTextContent("notifications");
-    expect(notificationsNav?.querySelector('[data-testid="nav-href"]')).toHaveTextContent("/dashboard/settings/notifications");
-    expect(notificationsNav?.querySelector('[data-testid="nav-badge"]')).toHaveTextContent("Soon");
+    expect(
+      notificationsNav?.querySelector('[data-testid="nav-icon"]'),
+    ).toHaveTextContent("notifications");
+    expect(
+      notificationsNav?.querySelector('[data-testid="nav-href"]'),
+    ).toHaveTextContent("/dashboard/settings/notifications");
+    expect(
+      notificationsNav?.querySelector('[data-testid="nav-badge"]'),
+    ).toHaveTextContent("Soon");
   });
 
   it("sets active state correctly based on pathname", () => {
@@ -127,10 +157,14 @@ describe("SettingsNav", () => {
 
     const navItems = screen.getAllByTestId("settings-nav-item");
     const activeItem = navItems.find(
-      (item) => item.querySelector('[data-testid="nav-active"]')?.textContent === "active",
+      (item) =>
+        item.querySelector('[data-testid="nav-active"]')?.textContent ===
+        "active",
     );
     expect(activeItem).toBeTruthy();
-    expect(activeItem?.querySelector('[data-testid="nav-href"]')).toHaveTextContent("/dashboard/settings/llm-providers");
+    expect(
+      activeItem?.querySelector('[data-testid="nav-href"]'),
+    ).toHaveTextContent("/dashboard/settings/llm-providers");
   });
 
   it("sets inactive state for non-current pathname", () => {
@@ -140,7 +174,9 @@ describe("SettingsNav", () => {
 
     const navItems = screen.getAllByTestId("settings-nav-item");
     const inactiveItems = navItems.filter(
-      (item) => item.querySelector('[data-testid="nav-active"]')?.textContent === "inactive",
+      (item) =>
+        item.querySelector('[data-testid="nav-active"]')?.textContent ===
+        "inactive",
     );
     expect(inactiveItems.length).toBeGreaterThan(0);
   });
@@ -162,7 +198,7 @@ describe("SettingsNav", () => {
 
     const sectionTitles = screen.getAllByRole("heading", { level: 3 });
     expect(sectionTitles).toHaveLength(3);
-    
+
     sectionTitles.forEach((title) => {
       expect(title).toHaveClass(
         "px-3",
@@ -184,8 +220,8 @@ describe("SettingsNav", () => {
     const navItems = screen.getAllByTestId("settings-nav-item");
     expect(navItems).toHaveLength(4); // LLM Providers, API Keys, Webhooks, Notifications
 
-    const labels = navItems.map(item => 
-      item.querySelector('[data-testid="nav-label"]')?.textContent
+    const labels = navItems.map(
+      (item) => item.querySelector('[data-testid="nav-label"]')?.textContent,
     );
     expect(labels).toContain("LLM Providers");
     expect(labels).toContain("API Keys");

@@ -88,7 +88,11 @@ describe("SettingsNavItem", () => {
     render(<SettingsNavItem {...baseProps} />);
 
     const icon = screen.getByText("smart_toy");
-    expect(icon).toHaveClass("material-symbols-outlined", "text-[20px]", "shrink-0");
+    expect(icon).toHaveClass(
+      "material-symbols-outlined",
+      "text-[20px]",
+      "shrink-0",
+    );
   });
 
   it("renders label with truncate styling and title", () => {

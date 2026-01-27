@@ -13,21 +13,27 @@ describe("InsightCardSkeleton", () => {
   it("renders icon container skeleton", () => {
     const { container } = render(<InsightCardSkeleton />);
 
-    const iconContainer = container.querySelector(".p-2.bg-slate-700\\/50.rounded-lg");
+    const iconContainer = container.querySelector(
+      ".p-2.bg-slate-700\\/50.rounded-lg",
+    );
     expect(iconContainer).toBeVisible();
   });
 
   it("renders icon skeleton", () => {
     const { container } = render(<InsightCardSkeleton />);
 
-    const iconSkeleton = container.querySelector(".h-5.w-5.bg-slate-600\\/50.rounded.animate-pulse");
+    const iconSkeleton = container.querySelector(
+      ".h-5.w-5.bg-slate-600\\/50.rounded.animate-pulse",
+    );
     expect(iconSkeleton).toBeVisible();
   });
 
   it("renders title skeleton", () => {
     const { container } = render(<InsightCardSkeleton />);
 
-    const titleSkeleton = container.querySelector(".h-5.w-24.bg-slate-700\\/50.rounded.animate-pulse");
+    const titleSkeleton = container.querySelector(
+      ".h-5.w-24.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(titleSkeleton).toBeVisible();
   });
 
@@ -37,11 +43,17 @@ describe("InsightCardSkeleton", () => {
     const descriptionContainer = container.querySelector(".space-y-2.mb-3");
     expect(descriptionContainer).toBeVisible();
 
-    const descriptionLines = container.querySelectorAll(".space-y-2.mb-3 .h-3.bg-slate-700\\/50.rounded.animate-pulse");
+    const descriptionLines = container.querySelectorAll(
+      ".space-y-2.mb-3 .h-3.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(descriptionLines).toHaveLength(2);
 
-    const firstLine = container.querySelector(".h-3.w-full.bg-slate-700\\/50.rounded.animate-pulse");
-    const secondLine = container.querySelector(".h-3.w-3\\/4.bg-slate-700\\/50.rounded.animate-pulse");
+    const firstLine = container.querySelector(
+      ".h-3.w-full.bg-slate-700\\/50.rounded.animate-pulse",
+    );
+    const secondLine = container.querySelector(
+      ".h-3.w-3\\/4.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(firstLine).toBeVisible();
     expect(secondLine).toBeVisible();
   });
@@ -49,7 +61,9 @@ describe("InsightCardSkeleton", () => {
   it("renders action link skeleton", () => {
     const { container } = render(<InsightCardSkeleton />);
 
-    const actionSkeleton = container.querySelector(".h-4.w-20.bg-slate-700\\/50.rounded.animate-pulse");
+    const actionSkeleton = container.querySelector(
+      ".h-4.w-20.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(actionSkeleton).toBeVisible();
   });
 
@@ -64,12 +78,18 @@ describe("InsightCardSkeleton", () => {
     const { container } = render(<InsightCardSkeleton />);
 
     // Check header section
-    const headerSection = container.querySelector(".flex.items-center.gap-3.mb-3");
+    const headerSection = container.querySelector(
+      ".flex.items-center.gap-3.mb-3",
+    );
     expect(headerSection).toBeVisible();
 
     // Check icon container and title are in the same row
-    const iconContainer = container.querySelector(".p-2.bg-slate-700\\/50.rounded-lg");
-    const titleSkeleton = container.querySelector(".h-5.w-24.bg-slate-700\\/50.rounded.animate-pulse");
+    const iconContainer = container.querySelector(
+      ".p-2.bg-slate-700\\/50.rounded-lg",
+    );
+    const titleSkeleton = container.querySelector(
+      ".h-5.w-24.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(iconContainer?.parentElement).toBe(headerSection);
     expect(titleSkeleton?.parentElement).toBe(headerSection);
   });
@@ -89,7 +109,7 @@ describe("InsightCardSkeleton", () => {
 
     const iconSkeleton = container.querySelector(".h-5.w-5.bg-slate-600\\/50");
     const otherSkeletons = container.querySelectorAll(".bg-slate-700\\/50");
-    
+
     expect(iconSkeleton).toBeVisible();
     expect(otherSkeletons.length).toBeGreaterThan(0);
   });

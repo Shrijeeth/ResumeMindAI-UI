@@ -16,9 +16,13 @@ describe("KnowledgeGraphSkeleton", () => {
     const headerSection = container.querySelector(".mb-4");
     expect(headerSection).toBeVisible();
 
-    const titleSkeleton = container.querySelector(".h-6.w-40.bg-slate-700\\/50.rounded.animate-pulse");
-    const subtitleSkeleton = container.querySelector(".h-4.w-56.bg-slate-700\\/50.rounded.animate-pulse");
-    
+    const titleSkeleton = container.querySelector(
+      ".h-6.w-40.bg-slate-700\\/50.rounded.animate-pulse",
+    );
+    const subtitleSkeleton = container.querySelector(
+      ".h-4.w-56.bg-slate-700\\/50.rounded.animate-pulse",
+    );
+
     expect(titleSkeleton).toBeVisible();
     expect(subtitleSkeleton).toBeVisible();
   });
@@ -26,30 +30,40 @@ describe("KnowledgeGraphSkeleton", () => {
   it("renders graph visualization area skeleton", () => {
     const { container } = render(<KnowledgeGraphSkeleton />);
 
-    const graphArea = container.querySelector(".flex-1.bg-slate-900\\/50.rounded-xl.border.border-slate-700\\/50.border-dashed.min-h-\\[200px\\].flex.flex-col.items-center.justify-center");
+    const graphArea = container.querySelector(
+      ".flex-1.bg-slate-900\\/50.rounded-xl.border.border-slate-700\\/50.border-dashed.min-h-\\[200px\\].flex.flex-col.items-center.justify-center",
+    );
     expect(graphArea).toBeVisible();
   });
 
   it("renders graph icon container skeleton", () => {
     const { container } = render(<KnowledgeGraphSkeleton />);
 
-    const iconContainer = container.querySelector(".w-14.h-14.bg-slate-800\\/50.rounded-xl.flex.items-center.justify-center.mb-4.animate-pulse");
+    const iconContainer = container.querySelector(
+      ".w-14.h-14.bg-slate-800\\/50.rounded-xl.flex.items-center.justify-center.mb-4.animate-pulse",
+    );
     expect(iconContainer).toBeVisible();
   });
 
   it("renders graph icon skeleton", () => {
     const { container } = render(<KnowledgeGraphSkeleton />);
 
-    const iconSkeleton = container.querySelector(".h-6.w-6.bg-slate-700\\/50.rounded.animate-pulse");
+    const iconSkeleton = container.querySelector(
+      ".h-6.w-6.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(iconSkeleton).toBeVisible();
   });
 
   it("renders graph text skeletons", () => {
     const { container } = render(<KnowledgeGraphSkeleton />);
 
-    const textSkeleton1 = container.querySelector(".h-4.w-24.bg-slate-700\\/50.rounded.animate-pulse.mb-2");
-    const textSkeleton2 = container.querySelector(".h-3.w-40.bg-slate-700\\/50.rounded.animate-pulse");
-    
+    const textSkeleton1 = container.querySelector(
+      ".h-4.w-24.bg-slate-700\\/50.rounded.animate-pulse.mb-2",
+    );
+    const textSkeleton2 = container.querySelector(
+      ".h-3.w-40.bg-slate-700\\/50.rounded.animate-pulse",
+    );
+
     expect(textSkeleton1).toBeVisible();
     expect(textSkeleton2).toBeVisible();
   });
@@ -57,7 +71,9 @@ describe("KnowledgeGraphSkeleton", () => {
   it("renders button skeleton", () => {
     const { container } = render(<KnowledgeGraphSkeleton />);
 
-    const buttonSkeleton = container.querySelector(".h-10.w-full.bg-slate-700\\/50.rounded-lg.animate-pulse.mt-4");
+    const buttonSkeleton = container.querySelector(
+      ".h-10.w-full.bg-slate-700\\/50.rounded-lg.animate-pulse.mt-4",
+    );
     expect(buttonSkeleton).toBeVisible();
   });
 
@@ -91,7 +107,7 @@ describe("KnowledgeGraphSkeleton", () => {
       "flex",
       "flex-col",
       "items-center",
-      "justify-center"
+      "justify-center",
     );
   });
 
@@ -108,7 +124,9 @@ describe("KnowledgeGraphSkeleton", () => {
   it("renders graph content with centered layout", () => {
     const { container } = render(<KnowledgeGraphSkeleton />);
 
-    const graphArea = container.querySelector(".flex.items-center.justify-center");
+    const graphArea = container.querySelector(
+      ".flex.items-center.justify-center",
+    );
     expect(graphArea).toBeVisible();
 
     const iconContainer = container.querySelector(".w-14.h-14");

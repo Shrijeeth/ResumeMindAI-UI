@@ -13,28 +13,36 @@ describe("ProviderCardSkeleton", () => {
   it("renders logo skeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
-    const logoSkeleton = container.querySelector(".w-10.h-10.rounded-lg.bg-slate-700\\/50.animate-pulse");
+    const logoSkeleton = container.querySelector(
+      ".w-10.h-10.rounded-lg.bg-slate-700\\/50.animate-pulse",
+    );
     expect(logoSkeleton).toBeVisible();
   });
 
   it("renders name skeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
-    const nameSkeleton = container.querySelector(".h-4.w-20.bg-slate-700\\/50.rounded.animate-pulse");
+    const nameSkeleton = container.querySelector(
+      ".h-4.w-20.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(nameSkeleton).toBeVisible();
   });
 
   it("renders model skeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
-    const modelSkeleton = container.querySelector(".h-3.w-16.bg-slate-700\\/50.rounded.animate-pulse");
+    const modelSkeleton = container.querySelector(
+      ".h-3.w-16.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(modelSkeleton).toBeVisible();
   });
 
   it("renders badge skeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
-    const badgeSkeleton = container.querySelector(".h-5.w-16.bg-slate-700\\/50.rounded-md.animate-pulse");
+    const badgeSkeleton = container.querySelector(
+      ".h-5.w-16.bg-slate-700\\/50.rounded-md.animate-pulse",
+    );
     expect(badgeSkeleton).toBeVisible();
   });
 
@@ -44,8 +52,12 @@ describe("ProviderCardSkeleton", () => {
     const latencySection = container.querySelector(".space-y-2.mt-4");
     expect(latencySection).toBeVisible();
 
-    const latencyLabelSkeleton = container.querySelector(".h-3.w-12.bg-slate-700\\/50.rounded.animate-pulse");
-    const latencyValueSkeleton = container.querySelector(".h-3.w-8.bg-slate-700\\/50.rounded.animate-pulse");
+    const latencyLabelSkeleton = container.querySelector(
+      ".h-3.w-12.bg-slate-700\\/50.rounded.animate-pulse",
+    );
+    const latencyValueSkeleton = container.querySelector(
+      ".h-3.w-8.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(latencyLabelSkeleton).toBeVisible();
     expect(latencyValueSkeleton).toBeVisible();
   });
@@ -53,17 +65,23 @@ describe("ProviderCardSkeleton", () => {
   it("renders progress bar skeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
-    const progressBar = container.querySelector(".w-full.bg-slate-800.rounded-full.h-1");
+    const progressBar = container.querySelector(
+      ".w-full.bg-slate-800.rounded-full.h-1",
+    );
     expect(progressBar).toBeVisible();
   });
 
   it("renders actions skeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
-    const actionsSection = container.querySelector(".mt-4.pt-4.border-t.border-slate-800.flex.justify-end.gap-2");
+    const actionsSection = container.querySelector(
+      ".mt-4.pt-4.border-t.border-slate-800.flex.justify-end.gap-2",
+    );
     expect(actionsSection).toBeVisible();
 
-    const actionButtons = container.querySelectorAll(".h-7.w-7.bg-slate-700\\/50.rounded.animate-pulse");
+    const actionButtons = container.querySelectorAll(
+      ".h-7.w-7.bg-slate-700\\/50.rounded.animate-pulse",
+    );
     expect(actionButtons).toHaveLength(3);
   });
 
@@ -78,11 +96,15 @@ describe("ProviderCardSkeleton", () => {
     const { container } = render(<ProviderCardSkeleton />);
 
     // Check header section
-    const headerSection = container.querySelector(".flex.justify-between.items-start.mb-4");
+    const headerSection = container.querySelector(
+      ".flex.justify-between.items-start.mb-4",
+    );
     expect(headerSection).toBeVisible();
 
     // Check logo and name container
-    const logoNameContainer = container.querySelector(".flex.items-center.gap-3");
+    const logoNameContainer = container.querySelector(
+      ".flex.items-center.gap-3",
+    );
     expect(logoNameContainer).toBeVisible();
 
     // Check name and model container
