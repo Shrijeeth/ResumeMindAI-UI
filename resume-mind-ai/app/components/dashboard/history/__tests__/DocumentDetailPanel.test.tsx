@@ -2,6 +2,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DocumentDetailPanel from "../DocumentDetailPanel";
+import type { DocumentDetail, DocumentType } from "@/app/lib/types/document";
+import type { ApiResponse } from "@/app/lib/api/client";
 import * as documentsApi from "@/app/lib/api/documents";
 
 const mockDoc = {
@@ -54,7 +56,8 @@ describe("DocumentDetailPanel", () => {
     vi.spyOn(documentsApi, "getDocument").mockResolvedValue({
       data: null,
       error: { message: "Failed" },
-    } as any);
+      status: 500,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={vi.fn()} />);
 
@@ -67,7 +70,8 @@ describe("DocumentDetailPanel", () => {
     vi.spyOn(documentsApi, "getDocument").mockResolvedValue({
       data: mockDoc,
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={vi.fn()} />);
 
@@ -86,7 +90,8 @@ describe("DocumentDetailPanel", () => {
         markdown_content: undefined,
       },
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={vi.fn()} />);
 
@@ -98,10 +103,11 @@ describe("DocumentDetailPanel", () => {
     vi.spyOn(documentsApi, "getDocument").mockResolvedValue({
       data: {
         ...mockDoc,
-        document_type: "custom_type",
+        document_type: "custom_type" as DocumentType,
       },
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={vi.fn()} />);
 
@@ -115,7 +121,8 @@ describe("DocumentDetailPanel", () => {
         classification_confidence: undefined,
       },
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={vi.fn()} />);
 
@@ -131,7 +138,8 @@ describe("DocumentDetailPanel", () => {
         markdown_content: longContent,
       },
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={vi.fn()} />);
 
@@ -145,7 +153,8 @@ describe("DocumentDetailPanel", () => {
     vi.spyOn(documentsApi, "getDocument").mockResolvedValue({
       data: mockDoc,
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={onClose} />);
 
@@ -160,7 +169,8 @@ describe("DocumentDetailPanel", () => {
     vi.spyOn(documentsApi, "getDocument").mockResolvedValue({
       data: mockDoc,
       error: null,
-    } as any);
+      status: 200,
+    } as ApiResponse<DocumentDetail>);
 
     render(<DocumentDetailPanel documentId="1" onClose={onClose} />);
 

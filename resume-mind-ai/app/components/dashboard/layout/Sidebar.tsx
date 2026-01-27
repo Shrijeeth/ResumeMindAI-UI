@@ -25,7 +25,6 @@ export default function Sidebar({
   const mainNavItems = [
     { icon: "dashboard", label: "Dashboard", href: "/dashboard" },
     { icon: "history", label: "Analysis History", href: "/dashboard/history" },
-    { icon: "description", label: "My Resumes", href: "/dashboard/resumes" },
     { icon: "hub", label: "Knowledge Graph", href: "/dashboard/graph" },
     { icon: "work", label: "Job Matches", href: "/dashboard/jobs" },
     { icon: "analytics", label: "Analytics", href: "/dashboard/analytics" },

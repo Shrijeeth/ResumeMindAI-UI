@@ -2,7 +2,11 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import DocumentRow from "../DocumentRow";
-import type { DocumentListItem } from "@/app/lib/types/document";
+import type {
+  DocumentListItem,
+  FileType,
+  DocumentType,
+} from "@/app/lib/types/document";
 
 type Props = Parameters<typeof DocumentRow>[0];
 
@@ -111,7 +115,7 @@ describe("DocumentRow", () => {
   it("shows raw document type when not mapped", () => {
     const doc: DocumentListItem = {
       ...baseDoc,
-      document_type: "custom_type" as any,
+      document_type: "custom_type" as DocumentType,
     };
 
     setup({ document: doc });
@@ -122,7 +126,7 @@ describe("DocumentRow", () => {
   it("falls back to default file type styling when unknown", () => {
     const doc: DocumentListItem = {
       ...baseDoc,
-      file_type: "pptx" as any,
+      file_type: "pptx" as FileType,
     };
 
     setup({ document: doc });

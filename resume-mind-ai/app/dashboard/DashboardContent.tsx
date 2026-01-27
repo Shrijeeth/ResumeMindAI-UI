@@ -18,6 +18,7 @@ import {
   InsightCardSkeleton,
 } from "@/app/components/dashboard/skeletons";
 import { uploadDocument } from "@/app/lib/api/documents";
+import { useDocuments } from "@/app/lib/hooks/useDocuments";
 
 interface DashboardContentProps {
   user: User;
@@ -94,6 +95,14 @@ export default function DashboardContent({ user }: DashboardContentProps) {
     { revalidateOnFocus: true, dedupingInterval: 5000 },
   );
 
+  // Fetch recent documents (analyses) - limit to 5 most recent
+  const { documents: recentAnalyses, isLoading: isLoadingAnalyses } =
+    useDocuments({
+      initialLimit: 5,
+      autoRefresh: true,
+      refreshInterval: 10000,
+    });
+
   const handleSignOut = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
@@ -113,8 +122,7 @@ export default function DashboardContent({ user }: DashboardContentProps) {
   };
 
   const handleViewAnalysis = (id: string) => {
-    console.log("View analysis:", id);
-    // TODO: Navigate to analysis detail page
+    router.push(`/dashboard/history?document=${id}`);
   };
 
   const handleExploreGraph = () => {
@@ -165,11 +173,26 @@ export default function DashboardContent({ user }: DashboardContentProps) {
         {/* Row 2: Recent Analyses + Knowledge Graph */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            {isLoading ? (
+            {isLoading || isLoadingAnalyses ? (
               <RecentAnalysesListSkeleton />
             ) : (
               <RecentAnalysesList
-                analyses={[]}
+                analyses={recentAnalyses.map((doc) => ({
+                  id: doc.id,
+                  fileName: doc.original_filename,
+                  status:
+                    doc.status === "completed"
+                      ? ("completed" as const)
+                      : doc.status === "parsing" ||
+                          doc.status === "validating" ||
+                          doc.status === "uploading"
+                        ? ("processing" as const)
+                        : doc.status === "failed" || doc.status === "invalid"
+                          ? ("failed" as const)
+                          : ("processing" as const),
+                  nodesExtracted: 0, // TODO: Get actual nodes count from API
+                  timestamp: doc.created_at,
+                }))}
                 onViewAnalysis={handleViewAnalysis}
                 onViewAll={() => router.push("/dashboard/history")}
               />
