@@ -41,38 +41,60 @@ const GraphViewer = forwardRef<GraphViewerHandle, GraphViewerProps>(
   ) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<FalkorDBCanvasType | null>(null);
+    const configRef = useRef<CanvasConfig | undefined>(config);
     const [isReady, setIsReady] = useState(false);
+
+    // Keep config ref in sync so callbacks always use latest
+    configRef.current = config;
 
     // Initialize the canvas element when mounted
     useEffect(() => {
       const container = containerRef.current;
       if (!container || canvasRef.current) return;
 
-      // Dynamically import and create the canvas
-      const initCanvas = async () => {
-        // Import the module to ensure the web component is registered
-        await import("@falkordb/canvas");
+      let cancelled = false;
 
-        // Wait for the custom element to be defined
+      const initCanvas = async () => {
+        // Import the module to register the web component
+        await import("@falkordb/canvas");
         await customElements.whenDefined("falkordb-canvas");
+        if (cancelled) return;
 
         // Create the canvas element
-        const canvas = document.createElement(
+        const canvasEl = document.createElement(
           "falkordb-canvas",
         ) as unknown as FalkorDBCanvasType;
-        (canvas as unknown as HTMLElement).style.width = "100%";
-        (canvas as unknown as HTMLElement).style.height = "100%";
-        (canvas as unknown as HTMLElement).style.display = "block";
+        const htmlEl = canvasEl as unknown as HTMLElement;
+        htmlEl.style.width = "100%";
+        htmlEl.style.height = "100%";
+        htmlEl.style.display = "block";
 
-        container.appendChild(canvas as unknown as Node);
-        canvasRef.current = canvas;
+        // Append to DOM — triggers connectedCallback + render()
+        container.appendChild(canvasEl as unknown as Node);
+
+        // Wait a frame for connectedCallback to finish setting up shadow DOM
+        await new Promise((r) => requestAnimationFrame(r));
+        if (cancelled) return;
+
+        // Give the canvas explicit dimensions from the container
+        const rect = container.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          canvasEl.setWidth(rect.width);
+          canvasEl.setHeight(rect.height);
+        }
+
+        // Set colors immediately
+        canvasEl.setBackgroundColor("#0f172a");
+        canvasEl.setForegroundColor("#e2e8f0");
+
+        canvasRef.current = canvasEl;
         setIsReady(true);
       };
 
       initCanvas();
 
       return () => {
-        // Cleanup on unmount
+        cancelled = true;
         if (
           canvasRef.current &&
           container.contains(canvasRef.current as unknown as Node)
@@ -80,15 +102,42 @@ const GraphViewer = forwardRef<GraphViewerHandle, GraphViewerProps>(
           container.removeChild(canvasRef.current as unknown as Node);
         }
         canvasRef.current = null;
+        setIsReady(false);
       };
     }, []);
 
-    // Update canvas data and config when they change
+    // Set config and data when canvas is ready or data changes
     useEffect(() => {
       const canvas = canvasRef.current;
       if (!canvas || !isReady || !data) return;
 
-      // Set the graph data
+      const cfg = configRef.current;
+
+      // Set config FIRST (before data) so callbacks are wired up
+      canvas.setConfig({
+        backgroundColor: "#0f172a",
+        foregroundColor: "#e2e8f0",
+        onNodeClick: (node) => {
+          cfg?.onNodeClick?.(node as unknown as GraphNode);
+        },
+        onNodeHover: (node) => {
+          cfg?.onNodeHover?.(node as unknown as GraphNode | null);
+        },
+        onLinkClick: (link) => {
+          cfg?.onLinkClick?.(link as unknown as GraphLink);
+        },
+        onLinkHover: (link) => {
+          cfg?.onLinkHover?.(link as unknown as GraphLink | null);
+        },
+        onBackgroundClick: () => {
+          cfg?.onBackgroundClick?.();
+        },
+        onZoom: (transform) => {
+          cfg?.onZoom?.(transform.k * 100);
+        },
+      });
+
+      // Set graph data AFTER config — setData triggers initGraph + simulation
       canvas.setData({
         nodes: data.nodes.map((node) => ({
           id: node.id,
@@ -96,6 +145,8 @@ const GraphViewer = forwardRef<GraphViewerHandle, GraphViewerProps>(
           color: node.color,
           visible: node.visible,
           data: node.data,
+          caption: "name",
+          size: node.data.type === "person" ? 12 : 8,
         })),
         links: data.links.map((link) => ({
           id: link.id,
@@ -107,53 +158,22 @@ const GraphViewer = forwardRef<GraphViewerHandle, GraphViewerProps>(
           data: link.data,
         })),
       });
+    }, [data, isReady]);
 
-      // Configure the canvas
-      canvas.setConfig({
-        backgroundColor: "#0f172a", // background-dark
-        foregroundColor: "#e2e8f0", // slate-200
-        onNodeClick: (node) => {
-          config?.onNodeClick?.(node as unknown as GraphNode);
-        },
-        onNodeHover: (node) => {
-          config?.onNodeHover?.(node as unknown as GraphNode | null);
-        },
-        onLinkClick: (link) => {
-          config?.onLinkClick?.(link as unknown as GraphLink);
-        },
-        onLinkHover: (link) => {
-          config?.onLinkHover?.(link as unknown as GraphLink | null);
-        },
-        onBackgroundClick: () => {
-          config?.onBackgroundClick?.();
-        },
-        onZoom: (transform) => {
-          config?.onZoom?.(transform.k * 100);
-        },
-      });
-
-      // Fit to view after a short delay to let the graph settle
-      const timeout = setTimeout(() => {
-        canvas.zoomToFit(1.2);
-      }, 500);
-
-      return () => clearTimeout(timeout);
-    }, [data, config, isReady]);
-
-    // Create stable handlers for the imperative methods
+    // Stable imperative methods
     const zoomIn = useCallback(() => {
       const canvas = canvasRef.current;
       if (canvas) {
-        const currentZoom = canvas.getViewport()?.zoom ?? 1;
-        canvas.zoom(currentZoom * 1.2);
+        const current = canvas.getZoom() || 1;
+        canvas.zoom(current * 1.3);
       }
     }, []);
 
     const zoomOut = useCallback(() => {
       const canvas = canvasRef.current;
       if (canvas) {
-        const currentZoom = canvas.getViewport()?.zoom ?? 1;
-        canvas.zoom(currentZoom / 1.2);
+        const current = canvas.getZoom() || 1;
+        canvas.zoom(current / 1.3);
       }
     }, []);
 
@@ -162,15 +182,11 @@ const GraphViewer = forwardRef<GraphViewerHandle, GraphViewerProps>(
     }, []);
 
     const resetView = useCallback(() => {
-      const canvas = canvasRef.current;
-      if (canvas) {
-        canvas.zoom(1);
-        canvas.zoomToFit(1.2);
-      }
+      canvasRef.current?.zoomToFit(1.0);
     }, []);
 
     const getZoom = useCallback(() => {
-      return (canvasRef.current?.getViewport()?.zoom ?? 1) * 100;
+      return (canvasRef.current?.getZoom() ?? 1) * 100;
     }, []);
 
     // Expose methods to parent via ref
