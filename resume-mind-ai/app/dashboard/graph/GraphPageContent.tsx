@@ -13,21 +13,17 @@ import GraphLegend from "@/app/components/dashboard/graph/GraphLegend";
 import GraphSidebar from "@/app/components/dashboard/graph/GraphSidebar";
 import GraphEmptyState from "@/app/components/dashboard/graph/GraphEmptyState";
 import GraphErrorState from "@/app/components/dashboard/graph/GraphErrorState";
-import { useGraphData } from "@/app/lib/hooks/useGraphData";
+import { useUserGraphData } from "@/app/lib/hooks/useUserGraphData";
 import { getNodeCountsByType } from "@/app/lib/types/graph";
 import type { GraphNode, NodeType } from "@/app/lib/types/graph";
 
 interface GraphPageContentProps {
   user: User;
-  documentId: string;
 }
 
-export default function GraphPageContent({
-  user,
-  documentId,
-}: GraphPageContentProps) {
+export default function GraphPageContent({ user }: GraphPageContentProps) {
   const router = useRouter();
-  const { data, isLoading, error, refresh } = useGraphData({ documentId });
+  const { data, isLoading, error, refresh } = useUserGraphData();
 
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [hiddenTypes, setHiddenTypes] = useState<NodeType[]>([]);

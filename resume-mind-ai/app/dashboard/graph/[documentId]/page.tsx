@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/server";
-import GraphPageContent from "../GraphPageContent";
 
 interface GraphDocumentPageProps {
   params: Promise<{ documentId: string }>;
@@ -13,10 +12,7 @@ export async function generateMetadata({ params }: GraphDocumentPageProps) {
   };
 }
 
-export default async function GraphDocumentPage({
-  params,
-}: GraphDocumentPageProps) {
-  const { documentId } = await params;
+export default async function GraphDocumentPage() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -26,5 +22,6 @@ export default async function GraphDocumentPage({
     redirect("/auth/login");
   }
 
-  return <GraphPageContent user={user} documentId={documentId} />;
+  // Redirect to main user-level graph page
+  redirect("/dashboard/graph");
 }
