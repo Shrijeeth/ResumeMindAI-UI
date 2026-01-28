@@ -24,6 +24,8 @@ const DEFAULT_ITEMS: LegendItem[] = [
   { type: "certification", label: NODE_LABELS.certification },
   { type: "project", label: NODE_LABELS.project },
   { type: "technology", label: NODE_LABELS.technology },
+  { type: "language", label: NODE_LABELS.language },
+  { type: "interest", label: NODE_LABELS.interest },
 ];
 
 export default function GraphLegend({

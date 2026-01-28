@@ -3,6 +3,10 @@
  * Maps to @falkordb/canvas data format and career knowledge graph domain.
  */
 
+// ---------------------------------------------------------------------------
+// Frontend Domain Types
+// ---------------------------------------------------------------------------
+
 // Node type enumeration for career graph
 export type NodeType =
   | "person"
@@ -12,7 +16,9 @@ export type NodeType =
   | "company"
   | "certification"
   | "project"
-  | "technology";
+  | "technology"
+  | "language"
+  | "interest";
 
 // Skill proficiency levels
 export type SkillLevel = "beginner" | "intermediate" | "advanced" | "expert";
@@ -26,7 +32,9 @@ export type RelationshipType =
   | "COMPLETED_PROJECT"
   | "USES_TECHNOLOGY"
   | "RELATED_TO"
-  | "AT_COMPANY";
+  | "AT_COMPANY"
+  | "SPEAKS"
+  | "INTERESTED_IN";
 
 // Custom node data based on career domain
 export interface NodeData {
@@ -103,6 +111,8 @@ export const NODE_COLORS: Record<NodeType, string> = {
   project: "#ec4899", // pink-500
   company: "#6366f1", // indigo-500
   technology: "#14b8a6", // teal-500
+  language: "#06b6d4", // cyan-500
+  interest: "#f43f5e", // rose-500
 };
 
 // Node labels for display
@@ -115,6 +125,8 @@ export const NODE_LABELS: Record<NodeType, string> = {
   project: "Projects",
   company: "Companies",
   technology: "Technologies",
+  language: "Languages",
+  interest: "Interests",
 };
 
 // Link color (slate-600)
@@ -129,4 +141,77 @@ export function getLevelPercentage(level: SkillLevel): number {
     expert: 100,
   };
   return levels[level];
+}
+
+// Count nodes by type for statistics
+export function getNodeCountsByType(data: GraphData): Record<string, number> {
+  const counts: Record<string, number> = {};
+  data.nodes.forEach((node) => {
+    const type = node.data.type;
+    counts[type] = (counts[type] || 0) + 1;
+  });
+  return counts;
+}
+
+// ---------------------------------------------------------------------------
+// API Response Types (raw backend shapes)
+// ---------------------------------------------------------------------------
+
+export interface ApiNodeData {
+  name: string;
+  type: string;
+  description?: string;
+  level?: string;
+  years?: number | string;
+  institution?: string;
+  date?: string;
+  relevance_score?: number;
+}
+
+export interface ApiNode {
+  id: number;
+  labels: string[];
+  color: string;
+  visible: boolean;
+  data: ApiNodeData;
+}
+
+export interface ApiLinkData {
+  label?: string;
+  weight?: number;
+  start_date?: string;
+  end_date?: string;
+}
+
+export interface ApiLink {
+  id: number;
+  relationship: string;
+  color: string;
+  source: number;
+  target: number;
+  visible: boolean;
+  data: ApiLinkData;
+}
+
+export interface ApiGraphResponse {
+  nodes: ApiNode[];
+  links: ApiLink[];
+}
+
+// ---------------------------------------------------------------------------
+// Graph Error Types
+// ---------------------------------------------------------------------------
+
+export type GraphErrorType =
+  | "unauthorized"
+  | "forbidden"
+  | "not_found"
+  | "validation"
+  | "network"
+  | "unknown";
+
+export interface GraphError {
+  type: GraphErrorType;
+  message: string;
+  status: number;
 }

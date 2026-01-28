@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/server";
-import GraphPageContent from "./GraphPageContent";
+import GraphDocumentSelector from "./GraphDocumentSelector";
 
 export const metadata = {
   title: "Knowledge Graph | ResumeMindAI",
@@ -16,5 +16,5 @@ export default async function GraphPage() {
     redirect("/auth/login");
   }
 
-  return <GraphPageContent user={user} />;
+  return <GraphDocumentSelector user={user} />;
 }

@@ -65,7 +65,12 @@ export default function Sidebar({
               icon={item.icon}
               label={item.label}
               href={item.href}
-              active={pathname === item.href}
+              active={
+                item.href === "/dashboard"
+                  ? pathname === item.href
+                  : pathname === item.href ||
+                    (pathname?.startsWith(item.href + "/") ?? false)
+              }
               onClick={onNavigate}
             />
           ))}
@@ -82,7 +87,10 @@ export default function Sidebar({
                 icon={item.icon}
                 label={item.label}
                 href={item.href}
-                active={pathname === item.href}
+                active={
+                  pathname === item.href ||
+                  (pathname?.startsWith(item.href + "/") ?? false)
+                }
                 onClick={onNavigate}
               />
             ))}

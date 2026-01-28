@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useMemo } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/app/lib/supabase/client";
@@ -12,17 +12,22 @@ import GraphControls from "@/app/components/dashboard/graph/GraphControls";
 import GraphLegend from "@/app/components/dashboard/graph/GraphLegend";
 import GraphSidebar from "@/app/components/dashboard/graph/GraphSidebar";
 import GraphEmptyState from "@/app/components/dashboard/graph/GraphEmptyState";
+import GraphErrorState from "@/app/components/dashboard/graph/GraphErrorState";
 import { useGraphData } from "@/app/lib/hooks/useGraphData";
-import { getNodeCountsByType } from "@/app/lib/data/dummyGraphData";
+import { getNodeCountsByType } from "@/app/lib/types/graph";
 import type { GraphNode, NodeType } from "@/app/lib/types/graph";
 
 interface GraphPageContentProps {
   user: User;
+  documentId: string;
 }
 
-export default function GraphPageContent({ user }: GraphPageContentProps) {
+export default function GraphPageContent({
+  user,
+  documentId,
+}: GraphPageContentProps) {
   const router = useRouter();
-  const { data, isLoading, error } = useGraphData();
+  const { data, isLoading, error, refresh } = useGraphData({ documentId });
 
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [hiddenTypes, setHiddenTypes] = useState<NodeType[]>([]);
@@ -30,6 +35,13 @@ export default function GraphPageContent({ user }: GraphPageContentProps) {
 
   // Canvas ref for control methods
   const graphViewerRef = useRef<GraphViewerHandle>(null);
+
+  // Redirect to login on 401
+  useEffect(() => {
+    if (error?.type === "unauthorized") {
+      router.push("/auth/login");
+    }
+  }, [error, router]);
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -89,6 +101,7 @@ export default function GraphPageContent({ user }: GraphPageContentProps) {
   }, [data]);
 
   const hasData = data && data.nodes.length > 0;
+  const showError = error && error.type !== "unauthorized";
 
   return (
     <DashboardLayout
@@ -118,7 +131,9 @@ export default function GraphPageContent({ user }: GraphPageContentProps) {
 
         {/* Graph Container */}
         <div className="flex-1 glass-card rounded-2xl overflow-hidden relative">
-          {!hasData && !isLoading ? (
+          {showError ? (
+            <GraphErrorState error={error} onRetry={refresh} />
+          ) : !hasData && !isLoading ? (
             <GraphEmptyState />
           ) : (
             <>
@@ -159,14 +174,6 @@ export default function GraphPageContent({ user }: GraphPageContentProps) {
             </>
           )}
         </div>
-
-        {/* Error State */}
-        {error && (
-          <div className="mt-4 flex items-center gap-3 text-sm text-red-400 bg-red-500/10 border border-red-500/20 px-4 py-3 rounded-xl">
-            <span className="material-symbols-outlined text-lg">error</span>
-            {error}
-          </div>
-        )}
       </div>
     </DashboardLayout>
   );
