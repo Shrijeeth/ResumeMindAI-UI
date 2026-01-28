@@ -202,15 +202,15 @@ const GraphViewer = forwardRef<GraphViewerHandle, GraphViewerProps>(
       [zoomIn, zoomOut, zoomToFit, resetView, getZoom],
     );
 
-    if (isLoading) {
-      return <GraphSkeleton />;
-    }
-
     return (
-      <div
-        ref={containerRef}
-        className={`w-full h-full bg-background-dark ${className}`}
-      />
+      <div className={`w-full h-full relative bg-background-dark ${className}`}>
+        <div ref={containerRef} className="w-full h-full" />
+        {isLoading && (
+          <div className="absolute inset-0 z-10">
+            <GraphSkeleton />
+          </div>
+        )}
+      </div>
     );
   },
 );
